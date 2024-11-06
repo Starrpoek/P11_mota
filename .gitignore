@@ -1,0 +1,8 @@
+# Ignore everything in /wp-content except your theme
+/../../../plugins/
+/../../../uploads/
+/../../../upgrade/
+
+# Ignore system files
+*.DS_Store
+Thumbs.db
