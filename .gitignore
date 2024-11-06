@@ -6,3 +6,8 @@
 # Ignore system files
 *.DS_Store
 Thumbs.db
+# Ignorer tous les autres thèmes
+/wp-content/themes/*
+
+# Inclure seulement ton thème personnalisé
+!/wp-content/themes/mota-theme/
