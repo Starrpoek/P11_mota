@@ -21,6 +21,7 @@ Text Domain: motatheme
 
 main {
     overflow: hidden;
+    
 }
 
 body {
@@ -28,7 +29,7 @@ body {
     color: #23282d; 
     font-family: 'Space Mono', monospace;     
     margin: auto; 
-    width: 100vw;
+    max-width: 90rem;
 }
 
 a {    
@@ -54,13 +55,18 @@ h2 {
     text-transform: uppercase;
 }
 
+h3 {
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
 /* HEADER - FOOTER */
 
 #header {
     position: sticky;
-    top:0;
+    top: 0;
     height: 80px;
-    width: 100vw;   
+    max-width: 90rem;   
 }
 
 #footer {
@@ -75,7 +81,6 @@ h2 {
     background-color: #ffffff;
     text-align: center;
     align-items: center;  
-    justify-content: center;
     margin: auto;
 }
 #header a,
@@ -103,16 +108,18 @@ h2 {
     padding: 0 5.87rem;
 }
 
-/* BLOCK */
 
 .container-header {
     position: relative; 
     display: flex;
     width: 100vw; 
     height: 100%;
-    max-width: 1200px;   
-    justify-content: space-between;
+    max-width: 90rem;   
+    justify-content: space-around;
     align-items: center; 
+}
+#navigation {
+    padding-left: 14rem;
 }
 .container-header img {
     width: 220px;
@@ -144,28 +151,35 @@ h2 {
                 padding-bottom: 2.3125rem;
                 border-bottom: 1px solid #000000;
             }
+            .bloc-details__category-scf h2 {
+                width: 26.25rem;
+            }
                 /* TXT bloc-details__category-scf */
                 .category-scf {
                     font-weight: 400;
+                    text-transform: uppercase;
+                    width: 26.25rem;
                 }
 
             /* DIV 1.1.2 bloc-details__picture */
             .bloc-details__picture {
                 display: flex;
                 flex: 1;
-                justify-content: center;
+                justify-content: flex-end;
                 align-self: end;
+                position: relative;
             }
                 /* DIV bloc-details__picture */
                 .picture__custom-post {
                     display: inline-block;
+                    position: relative;
+                    width: 35.18rem;
                 }
                     /* IMG picture__custom-post */
                     .custom-post {
                         display: block;
-                        object-fit: contain;
                         width: 100%;
-                        max-height: calc(100vh - 250px);
+                        height: 100%;
                     }
 
 
@@ -183,10 +197,17 @@ h2 {
                 flex: 1;
                 justify-content: space-between;
                 align-items: center;
+                height: 3.125rem;
+                gap: 6rem;
             }
                 /* DIV 1.2.1.1 : form__text-contact */
                 .form__text-contact {
-
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 1.3125rem !important;
+                    font-family: Poppins;
+                    
                 }  
                 /* DIV 1.2.1.2 : form__button-contact */
                 .form__button-contact {
@@ -216,4 +237,52 @@ h2 {
                 height: 100%;
                 margin-bottom: 1.25rem;
             }
+            .thumbnails-nav__arrows {
+                display: flex;
+                gap: 1.5rem;
+            }
+            .thumbnails-nav img {
+                width: 5.0625rem;
+                height: 4.4375rem;
+                object-fit: cover;
+            }
     /* ARTICLE 2 : single-photo__page-more */
+    .single-photo__page-more {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 6.81rem;
+    }
+        /* H3 : page-more__title */
+        .page-more__title{
+            padding-top: 4.81rem;
+            padding-bottom: 3.25rem;
+        }
+        /* DIV 2.1 : page-more__content */
+        .page-more__content {
+            display: flex;
+            justify-content: space-around;
+            gap: 1.25rem;
+        }
+            /* AJOUT VIA TEMPLATES-PARTS */
+            /* DIV 2.1.1 : photo-bloc-container */
+            .photo-bloc-container {
+                    width: 100%;
+                    max-width: calc(50% - 10px);
+                    overflow: hidden;
+            }
+                /* DIV 2.1.1.1 : photo-bloc */
+                .photo-bloc {
+                    width: 100%;
+                    height: 100%;
+                }
+                    /* DIV 2.1.1.1.1 : photo-bloc__picture */
+                    .photo-bloc__picture {
+                        width: 35.25rem;
+                        height: 30.9375rem;
+                    }
+                        /* IMG : photo-bloc__picture-img */
+                        .photo-bloc__picture-img {
+                            object-fit: cover;
+                            height: 100%;
+                            width: 100%;
+                        }

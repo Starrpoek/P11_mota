@@ -86,6 +86,45 @@ get_header() ?>
         </div>	
     </article>
     <article class="single-photo__page-more">
+        <h3 class="page-more__title"> Vous aimerez aussi </h3>
+        <div class="page-more__content">
+            <?php
+            $current_post_id = get_the_ID();
+
+            $categories = get_the_terms($current_post_id, 'categorie');
+            if (!empty($categories) && !is_wp_error($categories)) {
+                $category = reset($categories);
+                $category_name = esc_html($category->slug);
+                $args = array(
+                    'post_type' => 'photo',
+                    'posts_per_page' => 2,
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => 'categorie',
+                            'field'    => 'slug',
+                            'terms'    => $category_name,
+                        ),
+                    ),
+                    'post__not_in' => array($current_post_id),
+                    'orderby' => 'rand',
+                );
+                $custom_query = new WP_Query($args);
+
+                if ($custom_query->have_posts()) {
+                    while ($custom_query->have_posts()) {
+                        $custom_query->the_post();
+                        get_template_part('templates-parts/photo-bloc');
+                    }
+                    wp_reset_postdata();
+                } else {
+                    echo "<p>Aucune autre photo trouvée dans cette catégorie.</p>";
+                }
+            } else {
+                echo "<p>Aucune catégorie associée à cette photo.</p>";
+            }
+            ?>
+        </div>
+    </article>
 </section>
 
 
