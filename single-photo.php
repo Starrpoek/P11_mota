@@ -28,7 +28,7 @@ get_header() ?>
 		<div class="bloc-details">
 			<div class="bloc-details__category-scf">
 				<h2><?php echo the_title() ?></h2>
-				<p class="category-scf">Référence : <span><?php echo $refPhoto ?></span></p>
+				<p id="ref" class="category-scf">Référence : <span><?php echo $refPhoto ?></span></p>
 				<p class="category-scf">Catégorie : <span><?php echo $categoryPhoto ?></span></p>
 				<p class="category-scf">Format : <span><?php echo $formatPhoto ?></span></p>
 				<p class="category-scf">Type : <span><?php echo $typePhoto ?></span></p>
@@ -43,7 +43,7 @@ get_header() ?>
 	    <div class="bloc-contact">
             <div class="bloc-contact__form">
 			        <p class="form__text-contact">Cette photo vous intéresse ?</p>
-			        <button class="form__button-contact" data-reference="<?= $refPhoto ?>">Contact</button>
+			        <button id="openPhotoModal" class="form__button-contact link-modal" data-reference="<?= $refPhoto ?>">Contact</button>
             </div> 
             <div class="bloc-contact__thumbnails-nav">
                 <div class="thumbnails-nav">

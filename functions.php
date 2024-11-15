@@ -11,6 +11,7 @@ function mota_theme_setup() {
         'main_menu' => __( 'Menu Principal', 'mota-theme' ),
     ) );
 }
+
 function get_all_custom_fields( $post_id ) {
     $fields = get_post_meta( $post_id );
     
@@ -22,8 +23,7 @@ function get_all_custom_fields( $post_id ) {
     return $cleaned_fields;
 }
 
+
 add_action( 'wp_enqueue_scripts', 'mota_theme_enqueue_styles' );
 add_action( 'after_setup_theme', 'mota_theme_setup' );
-
-
 ?>

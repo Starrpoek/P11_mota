@@ -19,5 +19,32 @@ if ($random_image) {
     <h1 class="home-hero__title">Photographe Event</h1>
 </div>
 
+<article class="homepage-photos">
+    <div class="homepage-photos__content">
+        <?php
+        $args = array(
+            'post_type' => 'photo',
+            'posts_per_page' => 10,
+            'orderby' => 'date',
+            'order' => 'DESC',
+        );
+
+        $homepage_query = new WP_Query($args);
+
+        if ($homepage_query->have_posts()) {
+            while ($homepage_query->have_posts()) {
+                $homepage_query->the_post();
+                
+                get_template_part('templates-parts/photo-bloc');
+            }
+            wp_reset_postdata();
+        } else {
+            echo "<p>Aucune photo trouvée.</p>";
+        }
+        ?>
+    </div>
+</article>
+
+
 <?php get_footer(); 
 ?>

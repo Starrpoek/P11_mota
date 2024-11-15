@@ -88,7 +88,8 @@ h3 {
     position: sticky;
     top: 0;
     height: 80px;
-    max-width: 90rem;   
+    max-width: 90rem;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.09);   
 }
 
 #footer {
@@ -148,6 +149,27 @@ h3 {
     height: auto;
     margin: 40px;
 }
+/* PAGE HOME */
+.homepage-photos {
+    margin-top: 10.12rem; /* Temporaire */
+    margin-bottom: 8.12rem; /* Temporaire */
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+.homepage-photos__content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    gap: 1.25rem;
+    
+}
+.photo-bloc-container {
+    width: 35.25rem;
+    height: 30.9375rem;
+    object-fit: cover;
+}
 
 /* PAGE SINGLE-PHOTO */
 .single-photo__page {
@@ -189,12 +211,10 @@ h3 {
                 flex: 1;
                 justify-content: flex-end;
                 align-self: end;
-                position: relative;
             }
                 /* DIV bloc-details__picture */
                 .picture__custom-post {
                     display: inline-block;
-                    position: relative;
                     width: 35.18rem;
                 }
                     /* IMG picture__custom-post */
@@ -287,7 +307,7 @@ h3 {
         }
             /* AJOUT VIA TEMPLATES-PARTS */
             /* DIV 2.1.1 : photo-bloc-container */
-            .photo-bloc-container {
+            .page-more__content .photo-bloc-container {
                     width: 100%;
                     max-width: calc(50% - 10px);
                     overflow: hidden;
