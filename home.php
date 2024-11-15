@@ -43,6 +43,7 @@ if ($random_image) {
         }
         ?>
     </div>
+    <button id="load-more-button" class="load-more-button">Charger plus</button>>
 </article>
 
 
