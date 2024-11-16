@@ -2,8 +2,6 @@
 #contactModal {
     display: none;
     position: fixed;
-    justify-content: center;
-    align-items: center;
     top: 0;
     left: 0;
     z-index: 10;
@@ -12,12 +10,14 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
 .modal-content {
     background-color: #fefefe;
     border: 5px solid black;
     width: 37.3125rem;
     height: 48.0625rem;
 }
+
 .modal-content form {
     display: flex;
     flex-direction: column;
@@ -25,6 +25,16 @@
     align-items: center;
     margin-top: 45px;
 }
+
+.modal-content label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: 'Poppins';
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
 .modal-content textarea {
     width: 16.4375rem;
     height: 13.125rem;
@@ -32,48 +42,71 @@
     border-radius: 0.5rem;
     border: 1px solid #B8BBC2;
 }
+
 .modal-content input {
     width: 16.4375rem;
     height: 2.5rem;
     background: #fefefe;
+    font-family: 'Poppins';
+    padding: 0.5rem;
     border-radius: 0.5rem;
     border: 1px solid #B8BBC2;
 }
-.modal-submit {
-    height: 16.4375rem !important;
-  }
+
+.modal-content input[type="submit"] {
+  background: #d8d8d8 !important;
+  border-radius: 0.125rem;
+  box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.02);
+  font-family: 'Space Mono';
+}
+
+textarea:focus,
+input:focus {
+  outline: 1px solid #000;
+}
+
 .contact-modal__header {
     width: 100%;
 }
-  .contact-modal__form-label {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 24px;
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #000;
+
+.contact-modal__form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #000;
 }
+
 .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    color: #333;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.wpcf7-form-control-wrap {
+  margin-top: 0.25rem;
 }
 
 .wpcf7 form.invalid .wpcf7-response-output, .wpcf7 form.unaccepted .wpcf7-response-output, .wpcf7 form.payment-required .wpcf7-response-output {
-    margin: initial;
-    border-color: #e00000;
-  }
-  .wpcf7 form.sent .wpcf7-response-output {
-    border-color: #e00000;
-  }
-  .wpcf7-not-valid-tip {
-    text-transform: initial;
-  }
-  .wpcf7-spinner {
-    display: none;
-  }
+  margin: initial;
+  border-color: #e00000;
+}
+
+.wpcf7 form.sent .wpcf7-response-output {
+  border-color: #e00000;
+}
+
+.wpcf7-not-valid-tip {
+  margin-top: -1.45rem;
+  text-transform: initial;
+}
+
+.wpcf7-spinner {
+  display: none;
+}

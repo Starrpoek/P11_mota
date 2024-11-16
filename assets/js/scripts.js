@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
         if (modal) {
             modal.style.display = 'block';
+            if (event.target && event.target.dataset.reference) {
+                const referenceValue = event.target.dataset.reference;
+                const formReferenceField = document.getElementById('reference');
+                if (formReferenceField) {
+                    formReferenceField.value = referenceValue;
+                }
+            }
         }
     }
 

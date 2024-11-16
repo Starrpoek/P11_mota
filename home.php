@@ -43,7 +43,9 @@ if ($random_image) {
         }
         ?>
     </div>
-    <button id="load-more-button" class="load-more-button">Charger plus</button>>
+    <div class="infinite-scroll__button">
+    <button id="load-more-button" class="load-more-button">Charger plus</button>
+    </div>
 </article>
 
 
