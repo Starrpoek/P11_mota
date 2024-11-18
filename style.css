@@ -153,8 +153,32 @@ h3 {
 
 /* PAGE HOME */
 
+#filters {
+    display: flex;
+    justify-content: space-between;
+    width: 71.75rem;
+    margin: 4.94rem 9.12rem 2.5rem 9.12rem;
+}
+#filter-category,
+#filter-format,
+#filter-order {
+    width: 16.25rem;
+    height: 2.70rem;
+    padding: 0.6875rem 1.125rem;
+    border-radius: 0.5rem;
+    border: 1.3px solid var(--Blues-Gray2, #B8BBC2);
+    font-family: 'Poppins';
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.125rem;
+    text-transform: uppercase;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url(./assets/img/chevron-down-s.svg) no-repeat right 1.12rem center;
+}
+
 .homepage-photos {
-    margin-top: 10.12rem; /* Temporaire */
     display: flex;
     flex-direction: column;
 }

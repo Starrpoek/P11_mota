@@ -1,7 +1,7 @@
 <?php get_header(); 
 ?>
 
-<?php 
+<?php
 $random_image = get_posts(array(
     'post_type' => 'photo', 
     'posts_per_page' => 1, 
@@ -14,17 +14,35 @@ if ($random_image) {
     $thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'full'); 
 }
 ?>
-
+<!-- PHOTO ALEATOIRE TOP BACKGROUND -->
 <div id="home" class="home-hero hero-background" style="background-image: url('<?php echo $thumbnail_url ?>');">
     <h1 class="home-hero__title">Photographe Event</h1>
 </div>
+<!-- FILTRES DYNAMIQUES -->
+<div id="filters">
+    <div class="filters-taxonomy">
+        <select id="filter-category">
+            <option value="">Catégories</option>
+        </select>
+        <select id="filter-format">
+            <option value="">Formats</option>
+        </select>
+    </div>
+    <div class="filter-date">
+        <select id="filter-order">
+            <option value="DESC">De la plus récente</option>
+            <option value="ASC">De la plus ancienne</option>
+        </select>
+    </div>
+</div>
 
+<!-- ARTICLES PHOTOS -->
 <article class="homepage-photos">
-    <div class="homepage-photos__content">
+    <div id="photos" class="homepage-photos__content">
         <?php
         $args = array(
             'post_type' => 'photo',
-            'posts_per_page' => 10,
+            'posts_per_page' => 8,
             'orderby' => 'date',
             'order' => 'DESC',
         );

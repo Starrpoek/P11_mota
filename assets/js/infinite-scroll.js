@@ -9,10 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
         loadMoreButton.addEventListener('click', function () {
             if (!loading) {
                 loading = true;
+                
+                const category = document.getElementById("filter-category").value;
+                const format = document.getElementById("filter-format").value;
+                const order = document.getElementById("filter-order").value;
 
                 const formData = new FormData();
                 formData.append('action', 'load_more_photos');
                 formData.append('page', page + 1);
+                formData.append('category', category);
+                formData.append('format', format);
+                formData.append('order', order)
 
                 loadMoreButton.textContent = 'Charger plus';
 
