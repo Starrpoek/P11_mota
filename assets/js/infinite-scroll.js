@@ -5,6 +5,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const ajaxUrl = theme_ajax.ajax_url;
     let loading = false;
 
+    function resetPagination() {
+        page = 1;
+        loadMoreButton.style.display = 'block'; // Réafficher le bouton
+        loadMoreButton.textContent = 'Charger plus'; // Réinitialiser le texte du bouton
+    }
+
+    // Réinitialiser la pagination et le bouton lorsque les filtres changent
+    document.getElementById("filter-category").addEventListener("change", resetPagination);
+    document.getElementById("filter-format").addEventListener("change", resetPagination);
+    document.getElementById("filter-order").addEventListener("change", resetPagination);
+
     if (loadMoreButton) {
         loadMoreButton.addEventListener('click', function () {
             if (!loading) {
@@ -19,9 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('page', page + 1);
                 formData.append('category', category);
                 formData.append('format', format);
-                formData.append('order', order)
+                formData.append('order', order);
 
-                loadMoreButton.textContent = 'Charger plus';
+                loadMoreButton.textContent = 'Chargement...';
 
                 fetch(ajaxUrl, {
                     method: 'POST',
@@ -30,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(response => response.text())
                     .then(data => {
                         if (data.trim() === '') {
-                            loadMoreButton.style.display = 'none';
+                            loadMoreButton.style.display = 'none'; // Cacher le bouton si plus d'articles
                         } else {
-                            contentContainer.innerHTML += data;
+                            contentContainer.innerHTML += data; // Ajouter les nouveaux articles
                             page++;
                         }
                         loading = false;

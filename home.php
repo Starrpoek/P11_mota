@@ -14,10 +14,12 @@ if ($random_image) {
     $thumbnail_url = wp_get_attachment_image_url($thumbnail_id, 'full'); 
 }
 ?>
+
 <!-- PHOTO ALEATOIRE TOP BACKGROUND -->
 <div id="home" class="home-hero hero-background" style="background-image: url('<?php echo $thumbnail_url ?>');">
     <h1 class="home-hero__title">Photographe Event</h1>
 </div>
+
 <!-- FILTRES DYNAMIQUES -->
 <div id="filters">
     <div class="filters-taxonomy">
@@ -63,6 +65,7 @@ if ($random_image) {
     </div>
     <div class="infinite-scroll__button">
     <button id="load-more-button" class="load-more-button">Charger plus</button>
+    <div class="no-more-photos" id="no-more-photos" style="display: none;">Photos en cours de tirage...</div>
     </div>
 </article>
 
