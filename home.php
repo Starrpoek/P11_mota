@@ -23,15 +23,15 @@ if ($random_image) {
 <!-- FILTRES DYNAMIQUES -->
 <div id="filters">
     <div class="filters-taxonomy">
-        <select id="filter-category">
+        <select id="filter-category" class="filter-category filter-select">
             <option value="">Catégories</option>
         </select>
-        <select id="filter-format">
+        <select id="filter-format" class="filter-format filter-select">
             <option value="">Formats</option>
         </select>
     </div>
     <div class="filter-date">
-        <select id="filter-order">
+        <select id="filter-order" class="filter-date filter-select">
             <option value="DESC">De la plus récente</option>
             <option value="ASC">De la plus ancienne</option>
         </select>
