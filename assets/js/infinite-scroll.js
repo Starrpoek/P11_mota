@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(response => response.text())
                     .then(data => {
                         if (data.trim() === '') {
-                            loadMoreButton.style.display = 'none'; // Cacher le bouton si plus d'articles
+                            loadMoreButton.style.display = 'none';
                         } else {
-                            contentContainer.innerHTML += data; // Ajouter les nouveaux articles
+                            contentContainer.innerHTML += data;
                             page++;
                         }
                         loading = false;

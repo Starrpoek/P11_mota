@@ -115,8 +115,20 @@ h3 {
     border-top: 1px solid #000000;
 }
 
-.footer-links ul li {
-    padding: 0.5rem 5.38rem;
+#footer nav {
+    padding: 0.5rem 5.38rem 0.5rem 0;
+}
+.footer-links {
+    display: flex;
+    gap: 5.38rem;
+}
+
+#footer p {
+    text-transform: uppercase;
+    font-weight: 400;
+    text-decoration: none;
+    color: #000000;
+    font-family: "Poppins", sans-serif;
 }
 
 /* HEADER + FOOTER */
@@ -354,6 +366,9 @@ h3 {
                     width: 100%;
                     height: 100%;
                 }
+                .photo-bloc:hover {
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+                }
                     /* DIV 2.1.1.1.1 : photo-bloc__picture */
                     .photo-bloc__picture {
                         width: 35.25rem;
@@ -425,8 +440,9 @@ h3 {
     font-size: 12px;
   }
   .select2-container .select2-dropdown {
+    overflow: hidden !important;
     border-radius: 10px;
-    margin-top: 28px;
+    margin-top: 30px;
   }
   .select2-container .select2-dropdown .select2-results .select2-results__options {
     max-height: 500px;
@@ -450,7 +466,7 @@ h3 {
     color: #FFFFFF !important;
   }
   
-  body .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
     background-color: #E00000 !important;
     color: #FFFFFF;
   }
@@ -472,4 +488,160 @@ h3 {
   .select2-container--default .select2-results__option--highlighted {
     background-color: #FFD6D6 !important; /* Change la couleur de fond */
     color: #000000 !important;          /* Change la couleur du texte */
+}
+/* TEST */
+/* Conteneur principal */
+.photo-bloc {
+    position: relative; /* Nécessaire pour positionner les éléments enfants */
+    overflow: hidden; /* Empêche les débordements des enfants */
+}
+
+/* Filtre au hover */
+.photo-bloc__hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Filtre sombre */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Caché par défaut */
+    transition: opacity 0.3s ease; /* Transition fluide */
+}
+
+/* Montrer le filtre au hover */
+.photo-bloc:hover .photo-bloc__hover {
+    opacity: 1;
+}
+
+/* Icônes et textes à l'intérieur du hover */
+.photo-bloc__hover-icon,
+.photo-bloc__hover-text {
+    color: white; /* Texte visible sur le filtre sombre */
+    margin: 5px; /* Espacement entre les éléments */
+    display: block; /* Assure leur visibilité */
+}
+
+.photo-bloc__hover-fullscreen {
+    position: absolute;
+    top: 0.69rem; /* Distance par rapport au haut */
+    right: 1.12rem; /* Distance par rapport à la droite */
+    width: 2.125rem; /* Taille de l'icône */
+    height: 2.125rem;
+    cursor: pointer; /* Indique que c'est cliquable */
+}
+
+/* Icône eye au centre */
+.photo-bloc__hover-eye {
+    position: relative; /* Reste centré grâce au flex du parent */
+    width: 2.875rem; /* Taille de l'icône */
+    height: 1.95rem;
+    cursor: pointer;
+}
+/* Texte référence (ref) en bas à gauche */
+.photo-bloc__hover-ref {
+    position: absolute;
+    bottom: 0.75rem; /* Distance par rapport au bas */
+    left: 0.75rem; /* Distance par rapport à la gauche */
+    color: #FFF;
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 0.875rem; /* Taille du texte */
+    text-transform: uppercase;
+    padding: 4px 8px; /* Espacement interne */
+    border-radius: 4px; /* Coins arrondis */
+}
+/* Texte catégorie (cat) en bas à droite */
+.photo-bloc__hover-cat {
+    position: absolute;
+    bottom: 0.75rem; /* Distance par rapport au bas */
+    right: 0.75rem; /* Distance par rapport à la droite */
+    color: #FFF;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Style pour l'overlay */
+.fullscreen-overlay {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Overlay sombre */
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Conteneur de l'image dans l'overlay */
+.fullscreen-overlay__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%; /* Largeur spécifique */
+    max-width: 50vw;
+    height: auto; /* Hauteur spécifique */
+    overflow: hidden; /* Empêche le dépassement de l'image */
+}
+
+/* Image pleine taille dans l'overlay */
+.fullscreen-overlay__img {
+    max-width: 100%; /* Largeur maximale de l'image */
+    max-height: 80vh; /* Limite la hauteur de l'image à 80% de la hauteur de la fenêtre */
+    object-fit: contain; /* Maintient l'aspect ratio sans couper l'image */
+    object-position: center; /* Centre l'image */
+}
+
+.fullscreen__txt {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les éléments */
+    width: 100%; /* Assure que la largeur prend toute la place disponible */
+    gap: 2rem; /* Ajoute un écart entre les éléments */
+    margin-top: 1.19rem; /* Ajoute un petit espacement en haut */
+}
+
+/* Style pour les textes sous l'image */
+.fullscreen-overlay__text {
+    margin: 0.5rem 0; /* Espacement entre les textes */
+    font-size: 1rem; /* Taille du texte */
+    color: #fff; /* Couleur du texte blanc pour le contraste */
+    text-align: center; /* Centrer le texte */
+    font-weight: bold; /* Texte en gras */
+}
+
+/* Référence de la photo */
+.fullscreen-overlay__ref {
+    font-size: 0.875rem; /* Taille de la référence */
+    font-weight: 400;
+    letter-spacing: 0.0875rem;
+    text-transform: uppercase;
+    color: #fff; /* Blanc pour le texte */
+}
+
+/* Catégorie de la photo */
+.fullscreen-overlay__cat {
+    font-size: 0.875rem; /* Taille de la catégorie */
+    font-family: 'Poppins';
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #fff; /* Blanc pour le texte */
+}
+
+/* Bouton de fermeture */
+.fullscreen-overlay__close {
+    position: absolute;
+    top: 3.44rem; /* Décalage depuis le haut */
+    right: 3.25rem; /* Décalage depuis la droite */
+    width: 1.37631rem; /* Largeur de l'icône */
+    height: 1.37613rem; /* Hauteur de l'icône */
+    cursor: pointer; /* Change le curseur pour indiquer que c’est cliquable */
+    z-index: 10000; /* Plus haut que le reste pour être sûr que c'est au-dessus */
 }

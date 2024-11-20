@@ -82,14 +82,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fonction pour filtrer les photos
     function filterPhotos() {
-        console.log('Fonction filterPhotos appelée');
         const category = categoryFilter ? categoryFilter.value : "";
         const format = formatFilter ? formatFilter.value : "";
         const order = orderFilter ? orderFilter.value : "DESC";
-
-        console.log("Catégorie sélectionnée :", category);
-        console.log("Format sélectionné :", format);
-        console.log("Ordre sélectionné :", order);
 
         const formData = new FormData();
         formData.append("action", "filter_photos");
@@ -129,3 +124,48 @@ document.addEventListener('DOMContentLoaded', function () {
         orderFilter.addEventListener("change", filterPhotos);
     }
 });
+
+// Récupération des éléments nécessaires
+const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+const fullscreenImg = document.getElementById('fullscreen-img');
+const fullscreenRef = document.getElementById('fullscreen-ref');
+const fullscreenCat = document.getElementById('fullscreen-cat');
+
+// Fonction pour afficher l'overlay avec les informations de la photo
+function openFullscreen(imageSrc, refText, catText) {
+    fullscreenImg.src = imageSrc; // Affichage de l'image
+    fullscreenRef.textContent = refText; // Affichage de la référence
+    fullscreenCat.textContent = catText; // Affichage de la catégorie
+    
+    fullscreenOverlay.style.display = 'flex'; // Affichage de l'overlay
+}
+
+// Ajout d'un événement sur les icônes "fullscreen" pour afficher l'image en fullscreen
+const fullscreenIcons = document.querySelectorAll('.photo-bloc__hover-fullscreen'); // Sélection des icônes fullscreen
+fullscreenIcons.forEach(icon => {
+    icon.addEventListener('click', function() {
+        const parentBloc = icon.closest('.photo-bloc'); // On trouve le parent contenant l'image
+        
+        // Récupérer l'URL de l'image, la référence et la catégorie depuis le parent
+        const imageSrc = parentBloc.querySelector('.photo-bloc__picture-img').src;
+        const refText = parentBloc.querySelector('.photo-bloc__hover-ref') ? parentBloc.querySelector('.photo-bloc__hover-ref').textContent : '';
+        const catText = parentBloc.querySelector('.photo-bloc__hover-cat') ? parentBloc.querySelector('.photo-bloc__hover-cat').textContent : '';
+        
+        openFullscreen(imageSrc, refText, catText); // Ouvrir l'overlay avec les données
+    });
+});
+// Sélectionne le bouton de fermeture
+const closeOverlayBtn = document.getElementById('close-overlay');
+// Ajoute un gestionnaire de clic pour fermer l'overlay
+closeOverlayBtn.addEventListener('click', () => {
+    const overlay = document.getElementById('fullscreen-overlay');
+    overlay.style.display = 'none'; // Cache l'overlay
+});
+
+// Fonction pour fermer l'overlay lorsque l'on clique en dehors de l'image
+fullscreenOverlay.addEventListener('click', function(e) {
+    if (e.target === fullscreenOverlay) {
+        fullscreenOverlay.style.display = 'none'; // Masquer l'overlay
+    }
+});
+

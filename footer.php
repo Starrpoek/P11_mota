@@ -1,20 +1,22 @@
+
+
 <footer id="footer">
+    
+<?php get_template_part('templates-parts/contact-modal', 'contact'); ?>
 
-    <div class="footer-bar"></div>
-
-    <div class="footer-links">
-        <ul>
-            <li><a href="#">Mentions légales</a></li>
-            <li><a href="#">Vie privée</a></li>
-            <li>TOUS DROITS RÉSERVÉS</li>
-        </ul>
-    </div>
-    <?php get_template_part( 'templates-parts/contact-modal' ); ?>
+<?php
+ if ( has_nav_menu( 'footer_menu' ) ) : ?>
+    <?php 
+ wp_nav_menu ( array (
+ 'theme_location' => 'footer_menu' ,
+ 'menu_class' => 'footer-links',
+ 'container' => 'nav',
+ ) ); ?>
+    <p> Tous droits réservés </p>
+    <?php endif;
+ ?>
 </footer>
-
 <?php wp_footer(); ?>
-
-
-
 </body>
+
 </html>

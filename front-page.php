@@ -1,4 +1,8 @@
-<?php get_header(); 
+<?php
+/**
+ * Template Name: Page d'accueil
+ */
+get_header(); 
 ?>
 
 <?php
@@ -70,5 +74,5 @@ if ($random_image) {
 </article>
 
 
-<?php get_footer(); 
-?>
+<?php 
+get_footer(); ?>
