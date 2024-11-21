@@ -81,7 +81,6 @@ h3 {
 /* HEADER */
 
 #header {
-    position: sticky;
     top: 0;
     height: 80px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.09);   
@@ -221,9 +220,7 @@ h3 {
 }
 
     /* ARTICLE 1 : single-photo__page-details */
-    .single-photo__page-details {
 
-    }
         /* DIV 1.1 : bloc-details */
         .bloc-details {
             display: flex;
@@ -577,6 +574,7 @@ h3 {
     z-index: 9999;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 /* Conteneur de l'image dans l'overlay */
@@ -590,27 +588,106 @@ h3 {
     max-width: 50vw;
     height: auto; /* Hauteur spécifique */
     overflow: hidden; /* Empêche le dépassement de l'image */
+    padding-bottom: 2rem;
+}
+/* Bouton de fermeture */
+.fullscreen-overlay__close {
+    position: fixed;
+    top: 3.44rem; /* Décalage depuis le haut */
+    right: 3.25rem; /* Décalage depuis la droite */
+    width: 1.37631rem; /* Largeur de l'icône */
+    height: 1.37613rem; /* Hauteur de l'icône */
+    cursor: pointer; /* Change le curseur pour indiquer que c’est cliquable */
+    z-index: 10000; /* Plus haut que le reste pour être sûr que c'est au-dessus */
+}
+.fullscreen-overlay__nav-container {
+    display: flex;
+    align-items: center;
 }
 
+.nav-container__prev,
+.nav-container__next {
+    font-family: 'Space Mono';
+    font-weight: 400;
+    font-size: 0.75rem;
+    background-color: initial;
+    border: none;
+    padding: initial;
+    cursor: pointer;
+    transition: transform 0.2s ease; /* Transition douce pour l'agrandissement */
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: absolute; /* Position absolue pour qu'ils ne prennent pas de place dans le flux normal */
+    z-index: 100; /* S'assurer que les boutons sont au-dessus des autres éléments */
+}
+.nav-container__next {
+    right: 3.81rem;
+}
+.nav-container__prev {
+    left: 3.81rem;
+}
+/* Quand le bouton n'est pas survolé (état par défaut) */
+.nav-container__prev .fullscreen-overlay__prev,
+.nav-container__next .fullscreen-overlay__next {
+    display: block;
+}
+
+.nav-container__prev .fullscreen-overlay__prev-hover,
+.nav-container__next .fullscreen-overlay__next-hover {
+    display: none;
+}
+
+/* Quand le bouton est survolé */
+.nav-container__prev:hover .fullscreen-overlay__prev,
+.nav-container__next:hover .fullscreen-overlay__next {
+    display: none;
+}
+
+.nav-container__prev:hover .fullscreen-overlay__prev-hover,
+.nav-container__next:hover .fullscreen-overlay__next-hover {
+    display: block;
+}
+
+.nav-container__prev:hover,
+.nav-container__next:hover {
+    font-weight: 700;
+    font-size: 0.75rem;
+    font-family: 'Space Mono';
+    transform: scale(1.1); /* Augmenter la taille des boutons */
+    transform-origin: center; /* Le point de transformation est au centre */
+}
+
+.fullscreen-overlay__img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrer l'image horizontalement */
+    align-items: center; /* Centrer l'image verticalement */
+    width: 100%;
+}
 /* Image pleine taille dans l'overlay */
 .fullscreen-overlay__img {
     max-width: 100%; /* Largeur maximale de l'image */
     max-height: 80vh; /* Limite la hauteur de l'image à 80% de la hauteur de la fenêtre */
     object-fit: contain; /* Maintient l'aspect ratio sans couper l'image */
     object-position: center; /* Centre l'image */
+    display: block;
 }
 
 .fullscreen__txt {
     display: flex;
     justify-content: space-between; /* Espacement entre les éléments */
     width: 100%; /* Assure que la largeur prend toute la place disponible */
-    gap: 2rem; /* Ajoute un écart entre les éléments */
     margin-top: 1.19rem; /* Ajoute un petit espacement en haut */
 }
 
 /* Style pour les textes sous l'image */
 .fullscreen-overlay__text {
-    margin: 0.5rem 0; /* Espacement entre les textes */
+    display: flex;
+    justify-content: space-between;
+    width: auto;
+    /*margin: 0.5rem 0; /* Espacement entre les textes */
     font-size: 1rem; /* Taille du texte */
     color: #fff; /* Couleur du texte blanc pour le contraste */
     text-align: center; /* Centrer le texte */
@@ -633,15 +710,4 @@ h3 {
     font-weight: 500;
     text-transform: uppercase;
     color: #fff; /* Blanc pour le texte */
-}
-
-/* Bouton de fermeture */
-.fullscreen-overlay__close {
-    position: absolute;
-    top: 3.44rem; /* Décalage depuis le haut */
-    right: 3.25rem; /* Décalage depuis la droite */
-    width: 1.37631rem; /* Largeur de l'icône */
-    height: 1.37613rem; /* Hauteur de l'icône */
-    cursor: pointer; /* Change le curseur pour indiquer que c’est cliquable */
-    z-index: 10000; /* Plus haut que le reste pour être sûr que c'est au-dessus */
 }
