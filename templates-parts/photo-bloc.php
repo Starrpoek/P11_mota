@@ -14,7 +14,7 @@
         </div>
         <div class="photo-bloc__hover">
             <!-- Lien pour agrandir l'image -->
-            <a href="#" class="photo-bloc__hover-icon photo-bloc__hover-fullscreen">
+            <a class="photo-bloc__hover-icon photo-bloc__hover-fullscreen">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Icon_fullscreen.svg" alt="Agrandir">
             </a>
             <!-- Bouton pour voir la photo (avec lien vers la page de l'article) -->

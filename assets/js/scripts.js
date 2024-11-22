@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('Script chargé'); // Confirme que le script est chargé
+
     /**
      * ===========================
      * 1. Gestion des modales
@@ -9,33 +11,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('contactModal');
     const closeModalButton = document.getElementById('closeModal');
 
-    // Fonction pour ouvrir la modale
     function openModal(event) {
         event.preventDefault();
         if (modal) {
             modal.style.display = 'block';
-            // Remplit le champ de référence si présent
-            if (event.target && event.target.dataset.reference) {
-                const referenceValue = event.target.dataset.reference;
-                const formReferenceField = document.getElementById('reference');
-                if (formReferenceField) {
-                    formReferenceField.value = referenceValue;
-                }
-            }
+            const referenceValue = event.target?.dataset.reference || '';
+            const formReferenceField = document.getElementById('reference');
+            if (formReferenceField) formReferenceField.value = referenceValue;
         }
     }
 
-    // Gestion des clics pour ouvrir et fermer la modale
     openModalButton?.addEventListener('click', openModal);
     openPhotoModalButton?.addEventListener('click', openModal);
-    closeModalButton?.addEventListener('click', () => {
-        if (modal) modal.style.display = 'none';
-    });
-
+    closeModalButton?.addEventListener('click', () => modal && (modal.style.display = 'none'));
     window.addEventListener('click', (event) => {
-        if (modal && event.target === modal) {
-            modal.style.display = 'none';
-        }
+        if (event.target === modal) modal.style.display = 'none';
     });
 
     /**
@@ -48,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const orderFilter = document.getElementById('filter-order');
     const photosContainer = document.getElementById('photos');
 
-    // Fonction pour charger les données des filtres depuis le serveur
     function populateFilters() {
         fetch(theme_ajax.ajax_url + "?action=get_filters_terms")
             .then((response) => response.json())
@@ -71,23 +60,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
 
-                // Réinitialise Select2 après le chargement des filtres
                 if (typeof jQuery !== 'undefined') {
-                    jQuery('.filter-select').select2({
-                        minimumResultsForSearch: -1,
-                    });
+                    jQuery('.filter-select').select2({ minimumResultsForSearch: -1 });
                 }
             })
-            .catch((error) =>
-                console.error('Erreur lors du chargement des filtres :', error)
-            );
+            .catch((error) => console.error('Erreur lors du chargement des filtres :', error));
     }
 
-    // Fonction pour filtrer les photos via AJAX
-    window.filterPhotos = function () {
-        const category = categoryFilter ? categoryFilter.value : '';
-        const format = formatFilter ? formatFilter.value : '';
-        const order = orderFilter ? orderFilter.value : 'DESC';
+    function filterPhotos() {
+        const category = categoryFilter?.value || '';
+        const format = formatFilter?.value || '';
+        const order = orderFilter?.value || 'DESC';
 
         const formData = new FormData();
         formData.append('action', 'filter_photos');
@@ -96,10 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('order', order);
         formData.append('page', 1);
 
-        fetch(theme_ajax.ajax_url, {
-            method: 'POST',
-            body: formData,
-        })
+        fetch(theme_ajax.ajax_url, { method: 'POST', body: formData })
             .then((response) => response.json())
             .then((data) => {
                 if (data.success && data.data.html) {
@@ -109,17 +89,43 @@ document.addEventListener('DOMContentLoaded', function () {
                     photosContainer.innerHTML = '<p>Aucune photo trouvée.</p>';
                 }
             })
-            .catch((error) =>
-                console.error('Erreur lors du filtrage des photos :', error)
-            );
-    };
+            .catch((error) => console.error('Erreur lors du filtrage des photos :', error));
+    }
 
-    // Charge les filtres au chargement de la page
     populateFilters();
 
     /**
      * ===========================
-     * 3. Gestion de l'overlay fullscreen
+     * 3. Gestion des miniatures dynamiques
+     * ===========================
+     */
+    const thumbnailDisplay = document.querySelector('.thumbnail-display');
+    const arrows = document.querySelectorAll('.nav-icon-link');
+
+    if (thumbnailDisplay) {
+        arrows.forEach((arrow) => {
+            arrow.addEventListener('mouseover', function () {
+                const thumbnailUrl = this.getAttribute('data-thumbnail');
+                console.log('URL de la miniature détectée :', thumbnailUrl);
+
+                if (thumbnailUrl) {
+                    thumbnailDisplay.innerHTML = `<img src="${thumbnailUrl}" alt="Miniature">`;
+                    thumbnailDisplay.style.display = 'block';
+                } else {
+                    console.log('Aucune URL de miniature trouvée');
+                }
+            });
+
+            arrow.addEventListener('mouseout', function () {
+                thumbnailDisplay.style.display = 'none';
+                thumbnailDisplay.innerHTML = '';
+            });
+        });
+    }
+
+    /**
+     * ===========================
+     * 4. Gestion du fullscreen
      * ===========================
      */
     const fullscreenOverlay = document.getElementById('fullscreen-overlay');
@@ -128,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const fullscreenCat = document.getElementById('fullscreen-cat');
     const closeOverlayBtn = document.getElementById('close-overlay');
 
-    // Fonction pour afficher l'overlay
     function openFullscreen(imageSrc, refText, catText) {
         fullscreenImg.src = imageSrc;
         fullscreenRef.textContent = refText;
@@ -136,55 +141,27 @@ document.addEventListener('DOMContentLoaded', function () {
         fullscreenOverlay.style.display = 'flex';
     }
 
-    function openLightbox(index) {
-        const listePhotos = [];
-        document.querySelectorAll('.photo-bloc').forEach((photoBloc)=>{
-            const photo = {
-                src: photoBloc.attr('data-src'),
-                ref: photoBloc.attr('data-ref'),
-                cat: photoBloc.attr('data-cat'),
-                index: photoBloc.attr('data-index')
-            }
-            listePhotos.push(photo);
-        });
-
-        // Mise en page de la photo cliquée
-        document.querySelector('#fullscreen-img').src = listePhotos[index].src;
-        document.querySelector('#fullscreen-ref').textContent = listePhotos[index].ref;
-        document.querySelector('#fullscreen-cat').textContent = listePhotos[index].cat;
-
-    }
-
-
-    // eventListener sur précédente/suivante
-    // clic sur précédent/suivant cf. print-i
-
-    document.querySelectorAll('.photo-bloc__hover-fullscreen')
-        .forEach((photo)=> {
-            photo.addEventListener('click', (event)=> {
-                openLightbox(event.target.attr('data-index'));
-            })
-        })
-
-    // Fonction pour fermer l'overlay
     function closeFullscreen() {
         fullscreenOverlay.style.display = 'none';
     }
 
-    // Ajoute des événements aux icônes fullscreen
+    closeOverlayBtn?.addEventListener('click', closeFullscreen);
+    fullscreenOverlay?.addEventListener('click', (event) => {
+        if (event.target === fullscreenOverlay) closeFullscreen();
+    });
+
     function attachFullscreenEvents() {
         const fullscreenIcons = document.querySelectorAll('.photo-bloc__hover-fullscreen');
         fullscreenIcons.forEach((icon) => {
-            icon.removeEventListener('click', handleFullscreenClick); // Supprime les anciens gestionnaires
-            icon.addEventListener('click', handleFullscreenClick); // Ajoute le gestionnaire d'événements
+            icon.removeEventListener('click', handleFullscreenClick);
+            icon.addEventListener('click', handleFullscreenClick);
         });
     }
-    
-    // Gestionnaire pour le clic sur un bouton fullscreen
+
     function handleFullscreenClick(event) {
         const icon = event.currentTarget;
         const parentBloc = icon.closest('.photo-bloc');
-        
+
         if (parentBloc) {
             const imageSrc = parentBloc.querySelector('.photo-bloc__picture-img')?.src || '';
             const refText = parentBloc.querySelector('.photo-bloc__hover-ref')?.textContent || '';
@@ -192,17 +169,6 @@ document.addEventListener('DOMContentLoaded', function () {
             openFullscreen(imageSrc, refText, catText);
         }
     }
-    
 
-    // Initialisation des événements fullscreen
     attachFullscreenEvents();
-
-    // Ajout d'un événement pour fermer l'overlay
-    closeOverlayBtn?.addEventListener('click', closeFullscreen);
-    fullscreenOverlay?.addEventListener('click', (event) => {
-        if (event.target === fullscreenOverlay) {
-            closeFullscreen();
-        }
-    });
-    
 });

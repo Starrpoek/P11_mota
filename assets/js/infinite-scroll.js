@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
      * Réinitialise la pagination, le bouton "Charger plus" et les messages lorsque les filtres changent.
      */
     function resetPagination() {
+        console.log("Réinitialisation de la pagination"); // Log de test
         page = 1; // Réinitialise la pagination
         loadMoreButton.style.display = 'block'; // Réaffiche le bouton "Charger plus"
         loadMoreButton.textContent = 'Charger plus'; // Réinitialise le texte du bouton
@@ -47,13 +48,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attache la réinitialisation aux filtres
-    const filters = ['filter-category', 'filter-format', 'filter-order'];
-    filters.forEach((filterId) => {
-        const filter = document.getElementById(filterId);
-        if (filter) {
-            filter.addEventListener('change', resetPagination);
-        }
+    jQuery(document).ready(function () {
+        const filters = ['filter-category', 'filter-format', 'filter-order'];
+        filters.forEach((filterId) => {
+            const filter = jQuery(`#${filterId}`); // Utilise jQuery au lieu de $
+            if (filter.length) {
+                filter.on('change', function () {
+                    resetPagination();
+                });
+            } else {
+                console.error(`Filtre introuvable : ${filterId}`); // Log si le filtre est introuvable
+            }
+        });
     });
+    
 
     /**
      * Fonction pour charger plus de photos via AJAX.

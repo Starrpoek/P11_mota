@@ -21,16 +21,30 @@ Text Domain: motatheme
 }
 
 /* TEST */
-.dynamic-thumbnail {
-    width: 100px; /* Exemple */
-    height: auto;
-    transition: transform 0.3s ease-in-out;
+/* Conteneur principal pour positionnement */
+.thumbnails-nav {
+    position: relative; /* Définit un contexte pour les enfants positionnés */
 }
 
-.dynamic-thumbnail:hover {
-    transform: scale(1.1); /* Zoom léger */
-    cursor: pointer;
+/* Conteneur des miniatures dynamiques */
+.thumbnail-display {
+    position: absolute; /* Positionne par rapport à .thumbnails-nav */
+    bottom: calc(100% + 0.45rem); /* Réduit l’espace à 5px au-dessus des flèches */
+    left: 47%; /* Décale l'image vers la gauche (ajuste selon besoin) */
+    transform: translateX(-50%); /* Maintient le centrage relatif au point "left" */
+    z-index: 10;
+    display: none; /* Caché par défaut */
+    padding: 5px; /* Optionnel, ajoute un peu d’espace */
 }
+
+/* Style de l'image miniature */
+.thumbnail-display img {
+    width: 100px; /* Ajuste la taille selon tes besoins */
+    height: auto;
+}
+
+
+
 
 
 html {
