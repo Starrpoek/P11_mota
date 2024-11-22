@@ -2,6 +2,10 @@
     <?php 
         $refPhoto = get_field("reference_photo");
         $categories = get_the_terms(get_the_ID(), 'categorie');
+        if (!isset($index)) {
+    static $indexCounter = 0; // Compteur statique
+    $index = $indexCounter++;
+}
     ?>
 
     <div class="photo-bloc" 
@@ -14,7 +18,7 @@
         </div>
         <div class="photo-bloc__hover">
             <!-- Lien pour agrandir l'image -->
-            <a href="#" class="photo-bloc__hover-icon photo-bloc__hover-fullscreen">
+            <a class="photo-bloc__hover-icon photo-bloc__hover-fullscreen">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Icon_fullscreen.svg" alt="Agrandir">
             </a>
             <!-- Bouton pour voir la photo (avec lien vers la page de l'article) -->
@@ -43,36 +47,3 @@
         
     </div>
 </div>
-<!-- Conteneur pour le mode plein écran -->
- <?php /*
-<div id="fullscreen-overlay" class="fullscreen-overlay">
-    <div class="fullscreen-overlay__content">
-        <!-- Bouton de fermeture -->
-        <img id="close-overlay" src="<?php echo get_template_directory_uri(); ?>/assets/img/close.svg" alt="Fermer" class="fullscreen-overlay__close">
-        
-        <!-- Conteneur pour les images "précédente" et "suivante" -->
-        <div class="fullscreen-overlay__nav-container">
-            <!-- Image de la photo précédente (prev) -->
-            <button class="nav-container__prev">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/arrow-left.svg" alt="Précédente" class="fullscreen-overlay__nav fullscreen-overlay__prev">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/arrow-left-hover.svg" alt="Précédente" class="fullscreen-overlay__nav fullscreen-overlay__prev-hover">Précédente
-            </button>
-            <!-- Conteneur pour l'image principale et les textes -->
-            <div class="fullscreen-overlay__img-container">
-                <!-- Photo principale -->
-                <img id="fullscreen-img" src="" alt="Fullscreen Image" class="fullscreen-overlay__img">
-                <!-- Textes sous la photo -->
-                <div class="fullscreen__txt">
-                    <p id="fullscreen-ref" class="fullscreen-overlay__text fullscreen-overlay__ref"></p>
-                    <p id="fullscreen-cat" class="fullscreen-overlay__text fullscreen-overlay__cat"></p>
-                </div>
-            </div>
-            <!-- Image de la photo suivante (next) -->
-            <button class="nav-container__next">Suivante
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/arrow-right.svg" alt="Suivante" class="fullscreen-overlay__nav fullscreen-overlay__next">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/arrow-right-hover.svg" alt="Suivante" class="fullscreen-overlay__nav fullscreen-overlay__next-hover">
-            </button>
-        </div>
-    </div>
-</div>
-*/

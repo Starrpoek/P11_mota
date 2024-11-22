@@ -589,20 +589,28 @@ h3 {
     border-radius: 4px;
 }
 
-/* Style pour l'overlay */
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+
+/* Styles général de lightbox.php */
 .fullscreen-overlay {
-    display: none; /* Caché par défaut */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8); /* Overlay sombre */
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 9999;
     justify-content: center;
     align-items: center;
     overflow: hidden;
 }
+
+/* .............................................. */
+/* .............................................. */
+
 
 /* Conteneur de l'image dans l'overlay */
 .fullscreen-overlay__content {
@@ -611,27 +619,37 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%; /* Largeur spécifique */
+    width: 50%;
     max-width: 50vw;
-    height: auto; /* Hauteur spécifique */
-    overflow: hidden; /* Empêche le dépassement de l'image */
+    height: auto;
+    overflow: hidden;
     padding-bottom: 2rem;
 }
+
+/* .............................................. */
+/* .............................................. */
+
+
 /* Bouton de fermeture */
 .fullscreen-overlay__close {
     position: fixed;
-    top: 3.44rem; /* Décalage depuis le haut */
-    right: 3.25rem; /* Décalage depuis la droite */
-    width: 1.37631rem; /* Largeur de l'icône */
-    height: 1.37613rem; /* Hauteur de l'icône */
-    cursor: pointer; /* Change le curseur pour indiquer que c’est cliquable */
-    z-index: 10000; /* Plus haut que le reste pour être sûr que c'est au-dessus */
+    top: 3.44rem;
+    right: 3.25rem;
+    width: 1.37631rem;
+    height: 1.37613rem;
+    cursor: pointer;
+    z-index: 10;
 }
+
+
+/* .............................................. */
+/* .............................................. */
+
+
 .fullscreen-overlay__nav-container {
     display: flex;
     align-items: center;
 }
-
 .nav-container__prev,
 .nav-container__next {
     font-family: 'Space Mono';
@@ -641,13 +659,13 @@ h3 {
     border: none;
     padding: initial;
     cursor: pointer;
-    transition: transform 0.2s ease; /* Transition douce pour l'agrandissement */
+    transition: transform 0.2s ease;
     color: white;
     display: flex;
     align-items: center;
     gap: 5px;
-    position: absolute; /* Position absolue pour qu'ils ne prennent pas de place dans le flux normal */
-    z-index: 100; /* S'assurer que les boutons sont au-dessus des autres éléments */
+    position: absolute;
+    z-index: 10;
 }
 .nav-container__next {
     right: 3.81rem;
@@ -660,81 +678,83 @@ h3 {
 .nav-container__next .fullscreen-overlay__next {
     display: block;
 }
-
 .nav-container__prev .fullscreen-overlay__prev-hover,
 .nav-container__next .fullscreen-overlay__next-hover {
     display: none;
 }
-
 /* Quand le bouton est survolé */
 .nav-container__prev:hover .fullscreen-overlay__prev,
 .nav-container__next:hover .fullscreen-overlay__next {
     display: none;
 }
-
 .nav-container__prev:hover .fullscreen-overlay__prev-hover,
 .nav-container__next:hover .fullscreen-overlay__next-hover {
     display: block;
 }
-
 .nav-container__prev:hover,
 .nav-container__next:hover {
     font-weight: 700;
     font-size: 0.75rem;
     font-family: 'Space Mono';
-    transform: scale(1.1); /* Augmenter la taille des boutons */
-    transform-origin: center; /* Le point de transformation est au centre */
+    transform: scale(1.1);
+    transform-origin: center;
 }
+
+
+/* .............................................. */
+/* .............................................. */
+
 
 .fullscreen-overlay__img-container {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrer l'image horizontalement */
-    align-items: center; /* Centrer l'image verticalement */
+    justify-content: center;
+    align-items: center;
     width: 100%;
 }
 /* Image pleine taille dans l'overlay */
 .fullscreen-overlay__img {
-    max-width: 100%; /* Largeur maximale de l'image */
-    max-height: 80vh; /* Limite la hauteur de l'image à 80% de la hauteur de la fenêtre */
-    object-fit: contain; /* Maintient l'aspect ratio sans couper l'image */
-    object-position: center; /* Centre l'image */
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    object-position: center;
     display: block;
 }
 
+
+/* .............................................. */
+/* .............................................. */
+
+
+/* Bloc pour texte sous l'image */
 .fullscreen__txt {
     display: flex;
-    justify-content: space-between; /* Espacement entre les éléments */
-    width: 100%; /* Assure que la largeur prend toute la place disponible */
-    margin-top: 1.19rem; /* Ajoute un petit espacement en haut */
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1.19rem;
 }
-
 /* Style pour les textes sous l'image */
 .fullscreen-overlay__text {
     display: flex;
     justify-content: space-between;
+    text-align: center;
     width: auto;
-    /*margin: 0.5rem 0; /* Espacement entre les textes */
-    font-size: 1rem; /* Taille du texte */
-    color: #fff; /* Couleur du texte blanc pour le contraste */
-    text-align: center; /* Centrer le texte */
-    font-weight: bold; /* Texte en gras */
+    color: #fff !important;
 }
-
 /* Référence de la photo */
 .fullscreen-overlay__ref {
-    font-size: 0.875rem; /* Taille de la référence */
-    font-weight: 400;
+    font-size: 0.875rem;
+    font-weight: 500 !important;
     letter-spacing: 0.0875rem;
     text-transform: uppercase;
-    color: #fff; /* Blanc pour le texte */
 }
-
 /* Catégorie de la photo */
-.fullscreen-overlay__cat {
-    font-size: 0.875rem; /* Taille de la catégorie */
-    font-family: 'Poppins';
-    font-weight: 500;
+#fullscreen-cat {
+    text-align: right;
+    font-family: "Space Mono" !important;
+    font-size: 0.875rem;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.0875rem;
     text-transform: uppercase;
-    color: #fff; /* Blanc pour le texte */
 }

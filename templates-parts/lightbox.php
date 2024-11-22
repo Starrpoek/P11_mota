@@ -1,5 +1,5 @@
 <!-- Conteneur pour le mode plein écran -->
-<div id="fullscreen-overlay" class="fullscreen-overlay">
+<div class="fullscreen-overlay">
     <div class="fullscreen-overlay__content">
         <!-- Bouton de fermeture -->
         <img id="close-overlay" src="<?php echo get_template_directory_uri(); ?>/assets/img/close.svg" alt="Fermer" class="fullscreen-overlay__close">

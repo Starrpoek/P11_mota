@@ -9,10 +9,10 @@
  */
 function mota_theme_enqueue_assets() {
     // CSS principal du thème
-    wp_enqueue_style('mota-theme-style', get_stylesheet_uri());
+    wp_enqueue_style('mota-theme-style', get_stylesheet_uri(), [], filemtime(get_stylesheet_directory() . '/style.css'), 'all');
 
     // CSS pour la modale
-    wp_enqueue_style('contact-modal-style', get_template_directory_uri() . '/assets/css/contact-modal.css', [], null, 'all');
+    wp_enqueue_style('contact-modal-style', get_template_directory_uri() . '/assets/css/contact-modal.css', [], filemtime(get_template_directory() . '/assets/css/contact-modal.css'), 'all');
 
     // Select2 pour les filtres
     wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
@@ -20,12 +20,16 @@ function mota_theme_enqueue_assets() {
     // JavaScript principal
     wp_enqueue_script('jquery');
     wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], null, true);
-    wp_enqueue_script('filters-js', get_template_directory_uri() . '/assets/js/filters.js', ['jquery', 'select2-js'], null, true);
-    wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/assets/js/scripts.js', ['jquery'], '1.0', true);
-    wp_enqueue_script('infinite-scroll', get_template_directory_uri() . '/assets/js/infinite-scroll.js', ['jquery'], null, true);
+    wp_enqueue_script('filters-js', get_template_directory_uri() . '/assets/js/filters.js', ['jquery', 'select2-js'], filemtime(get_template_directory() . '/assets/js/filters.js'), true);
+    wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/assets/js/scripts.js', ['jquery'], filemtime(get_template_directory() . '/assets/js/scripts.js'), true);
+    wp_enqueue_script('infinite-scroll', get_template_directory_uri() . '/assets/js/infinite-scroll.js', ['jquery'], filemtime(get_template_directory() . '/assets/js/infinite-scroll.js'), true);
 
     // Ajout d'une variable JS globale pour AJAX
-    wp_localize_script('theme-scripts', 'theme_ajax', ['ajax_url' => admin_url('admin-ajax.php'), ]);
+    $ajax_params = ['ajax_url' => admin_url('admin-ajax.php')];
+
+    wp_localize_script('filters-js', 'theme_ajax', $ajax_params);
+    wp_localize_script('infinite-scroll', 'theme_ajax', $ajax_params);
+    wp_localize_script('theme-scripts', 'theme_ajax', $ajax_params);
 }
 add_action('wp_enqueue_scripts', 'mota_theme_enqueue_assets');
 
@@ -52,7 +56,11 @@ add_action('after_setup_theme', 'mota_theme_setup');
  * Récupère tous les champs personnalisés d'un article.
  * Cette fonction est utilisée pour obtenir des données spécifiques.
  */
-function get_all_custom_fields($post_id) {
+function mota_get_all_custom_fields($post_id) {
+    if (!is_numeric($post_id)) {
+        return [];
+    }
+
     $fields = get_post_meta($post_id);
     $cleaned_fields = [];
 
