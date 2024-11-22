@@ -136,6 +136,36 @@ document.addEventListener('DOMContentLoaded', function () {
         fullscreenOverlay.style.display = 'flex';
     }
 
+    function openLightbox(index) {
+        const listePhotos = [];
+        document.querySelectorAll('.photo-bloc').forEach((photoBloc)=>{
+            const photo = {
+                src: photoBloc.attr('data-src'),
+                ref: photoBloc.attr('data-ref'),
+                cat: photoBloc.attr('data-cat'),
+                index: photoBloc.attr('data-index')
+            }
+            listePhotos.push(photo);
+        });
+
+        // Mise en page de la photo cliquée
+        document.querySelector('#fullscreen-img').src = listePhotos[index].src;
+        document.querySelector('#fullscreen-ref').textContent = listePhotos[index].ref;
+        document.querySelector('#fullscreen-cat').textContent = listePhotos[index].cat;
+
+    }
+
+
+    // eventListener sur précédente/suivante
+    // clic sur précédent/suivant cf. print-i
+
+    document.querySelectorAll('.photo-bloc__hover-fullscreen')
+        .forEach((photo)=> {
+            photo.addEventListener('click', (event)=> {
+                openLightbox(event.target.attr('data-index'));
+            })
+        })
+
     // Fonction pour fermer l'overlay
     function closeFullscreen() {
         fullscreenOverlay.style.display = 'none';
@@ -154,6 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleFullscreenClick(event) {
         const icon = event.currentTarget;
         const parentBloc = icon.closest('.photo-bloc');
+        
         if (parentBloc) {
             const imageSrc = parentBloc.querySelector('.photo-bloc__picture-img')?.src || '';
             const refText = parentBloc.querySelector('.photo-bloc__hover-ref')?.textContent || '';
@@ -173,4 +204,5 @@ document.addEventListener('DOMContentLoaded', function () {
             closeFullscreen();
         }
     });
+    
 });

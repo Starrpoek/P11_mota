@@ -20,6 +20,19 @@ Text Domain: motatheme
     padding: 0;
 }
 
+/* TEST */
+.dynamic-thumbnail {
+    width: 100px; /* Exemple */
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dynamic-thumbnail:hover {
+    transform: scale(1.1); /* Zoom léger */
+    cursor: pointer;
+}
+
+
 html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;

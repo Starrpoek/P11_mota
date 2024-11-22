@@ -56,6 +56,7 @@ if ($random_image) {
         $homepage_query = new WP_Query($args);
 
         if ($homepage_query->have_posts()) {
+            $index=0;
             while ($homepage_query->have_posts()) {
                 $homepage_query->the_post();
                 

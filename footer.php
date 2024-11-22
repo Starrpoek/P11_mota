@@ -16,6 +16,7 @@
     <?php endif;
  ?>
 </footer>
+<?php get_template_part('templates-parts/lightbox'); ?>
 <?php wp_footer(); ?>
 </body>
 
