@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Script chargé'); // Confirme que le script est chargé
-
     /**
      * ===========================
      * 1. Gestion des modales
@@ -38,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const orderFilter = document.getElementById('filter-order');
     const photosContainer = document.getElementById('photos');
 
+    // Fonction pour peupler les filtres
     function populateFilters() {
         fetch(theme_ajax.ajax_url + "?action=get_filters_terms")
             .then((response) => response.json())
@@ -67,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch((error) => console.error('Erreur lors du chargement des filtres :', error));
     }
 
+    // Fonction pour filtrer les photos via AJAX
     function filterPhotos() {
         const category = categoryFilter?.value || '';
         const format = formatFilter?.value || '';
@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success && data.data.html) {
                     photosContainer.innerHTML = data.data.html;
                     attachFullscreenEvents(); // Réattache les événements fullscreen
+                    attachLightboxEvents(); // Réattache les événements lightbox
                 } else {
                     photosContainer.innerHTML = '<p>Aucune photo trouvée.</p>';
                 }
@@ -92,6 +93,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch((error) => console.error('Erreur lors du filtrage des photos :', error));
     }
 
+    window.filterPhotos = filterPhotos;
+
+    // Initialisation : chargement des filtres
     populateFilters();
 
     /**
@@ -106,13 +110,9 @@ document.addEventListener('DOMContentLoaded', function () {
         arrows.forEach((arrow) => {
             arrow.addEventListener('mouseover', function () {
                 const thumbnailUrl = this.getAttribute('data-thumbnail');
-                console.log('URL de la miniature détectée :', thumbnailUrl);
-
                 if (thumbnailUrl) {
                     thumbnailDisplay.innerHTML = `<img src="${thumbnailUrl}" alt="Miniature">`;
                     thumbnailDisplay.style.display = 'block';
-                } else {
-                    console.log('Aucune URL de miniature trouvée');
                 }
             });
 
@@ -161,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleFullscreenClick(event) {
         const icon = event.currentTarget;
         const parentBloc = icon.closest('.photo-bloc');
-
         if (parentBloc) {
             const imageSrc = parentBloc.querySelector('.photo-bloc__picture-img')?.src || '';
             const refText = parentBloc.querySelector('.photo-bloc__hover-ref')?.textContent || '';
@@ -171,4 +170,79 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     attachFullscreenEvents();
+
+    /**
+     * ===========================
+     * . Gestion de la lightbox
+     * ===========================
+     */
+
+    function openLightbox(index) {
+
+    
+        // Convertir index en entier
+        index = parseInt(index, 10);
+        if (isNaN(index) || index < 0) {
+            console.error('Index invalide pour openLightbox :', index);
+            return;
+        }
+    
+        const listePhotos = [];
+        document.querySelectorAll('.photo-bloc').forEach((photoBloc) => {
+            const photo = {
+                src: photoBloc.getAttribute('data-src') || '',
+                ref: photoBloc.getAttribute('data-ref') || 'Inconnu',
+                cat: photoBloc.getAttribute('data-cat') || 'Inconnu',
+                index: parseInt(photoBloc.getAttribute('data-index'), 10) || -1
+            };
+    
+            if (!photo.src || photo.index === -1) {
+                console.error('Photo invalide détectée :', photoBloc, photo);
+            } else {
+                listePhotos.push(photo);
+            }
+        });
+    
+        if (listePhotos[index]) {
+            const selectedPhoto = listePhotos[index];
+            const fullscreenImg = document.querySelector('#fullscreen-img');
+            const fullscreenRef = document.querySelector('#fullscreen-ref');
+            const fullscreenCat = document.querySelector('#fullscreen-cat');
+    
+            if (fullscreenImg && fullscreenRef && fullscreenCat) {
+                fullscreenImg.src = selectedPhoto.src;
+                fullscreenRef.textContent = selectedPhoto.ref;
+                fullscreenCat.textContent = selectedPhoto.cat;
+            } else {
+                console.error('Éléments du lightbox manquants dans le DOM.');
+            }
+        } else {
+            console.error('Photo non trouvée pour l’index :', index);
+        }
+    }
+    
+    function attachLightboxEvents() {
+        const fullscreenIcons = document.querySelectorAll('.photo-bloc__hover-fullscreen');
+    
+        fullscreenIcons.forEach((icon, idx) => {
+    
+            icon.addEventListener('click', (event) => {
+                event.preventDefault();
+                const parentBloc = icon.closest('.photo-bloc');
+                if (parentBloc) {
+                    const index = parentBloc.getAttribute('data-index');
+                    if (index === null || index.trim() === '') {
+                        console.error('Attribut data-index manquant ou vide pour le bloc parent.');
+                    } else {
+                        openLightbox(index);
+                    }
+                } else {
+                    console.error('Impossible de trouver le bloc parent pour l’élément fullscreen cliqué.');
+                }
+            });
+        });
+    }
+    // Attachement initial des événements lightbox
+    attachLightboxEvents();
+    
 });

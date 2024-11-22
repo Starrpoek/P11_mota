@@ -3,6 +3,7 @@
 <footer id="footer">
     
 <?php get_template_part('templates-parts/contact-modal', 'contact'); ?>
+<?php get_template_part('templates-parts/lightbox'); ?>
 
 <?php
  if ( has_nav_menu( 'footer_menu' ) ) : ?>
@@ -16,7 +17,7 @@
     <?php endif;
  ?>
 </footer>
-<?php get_template_part('templates-parts/lightbox'); ?>
+
 <?php wp_footer(); ?>
 </body>
 

@@ -5,16 +5,16 @@
     ?>
 
     <div class="photo-bloc" 
-            data-src="<?php echo get_the_post_thumbnail_url(); ?>" 
-            data-ref="<?= $refPhoto; ?>" 
-            data-cat="<?= $categories; ?>" 
-            data-index="<?= $index++; ?>"> 
+        data-src="<?php echo esc_attr($thumbnail_url); ?>"
+        data-ref="<?php echo esc_attr($refPhoto); ?>"
+        data-cat="<?php echo esc_attr($categories_string); ?>"
+        data-index="<?php echo $index; ?>">
         <div class="photo-bloc__picture">
             <img src="<?php echo get_the_post_thumbnail_url(); ?>" class="photo-bloc__picture-img" alt="<?php the_title_attribute(); ?>">
         </div>
         <div class="photo-bloc__hover">
             <!-- Lien pour agrandir l'image -->
-            <a class="photo-bloc__hover-icon photo-bloc__hover-fullscreen">
+            <a href="#" class="photo-bloc__hover-icon photo-bloc__hover-fullscreen">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/Icon_fullscreen.svg" alt="Agrandir">
             </a>
             <!-- Bouton pour voir la photo (avec lien vers la page de l'article) -->
