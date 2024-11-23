@@ -84,8 +84,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .then((data) => {
                 if (data.success && data.data.html) {
                     photosContainer.innerHTML = data.data.html;
-                    attachFullscreenEvents(); // Réattache les événements fullscreen
-                    attachLightboxEvents(); // Réattache les événements lightbox
+
+                    // Réattacher les événements après filtrage
+                    window.attachFullscreenEvents();
+                    window.attachLightboxEvents();
+
                 } else {
                     photosContainer.innerHTML = '<p>Aucune photo trouvée.</p>';
                 }
@@ -135,63 +138,90 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeOverlayBtn = document.getElementById('close-overlay');
 
     function openFullscreen(imageSrc, refText, catText) {
-        fullscreenImg.src = imageSrc;
-        fullscreenRef.textContent = refText;
-        fullscreenCat.textContent = catText;
+        if (!fullscreenOverlay || !fullscreenImg || !fullscreenRef || !fullscreenCat) {
+            console.error('Éléments manquants pour afficher le fullscreen.');
+            return;
+        }
+        fullscreenImg.src = imageSrc || '';
+        fullscreenRef.textContent = refText || 'Inconnu';
+        fullscreenCat.textContent = catText || 'Inconnu';
         fullscreenOverlay.style.display = 'flex';
     }
 
     function closeFullscreen() {
+        if (!fullscreenOverlay) {
+            console.error('Impossible de fermer le fullscreen, élément introuvable.');
+            return;
+        }
         fullscreenOverlay.style.display = 'none';
     }
 
     closeOverlayBtn?.addEventListener('click', closeFullscreen);
     fullscreenOverlay?.addEventListener('click', (event) => {
-        if (event.target === fullscreenOverlay) closeFullscreen();
+        if (event.target === fullscreenOverlay) {
+            closeFullscreen();
+        }
     });
 
-    function attachFullscreenEvents() {
+    window.attachFullscreenEvents = function attachFullscreenEvents() {
         const fullscreenIcons = document.querySelectorAll('.photo-bloc__hover-fullscreen');
+
         fullscreenIcons.forEach((icon) => {
             icon.removeEventListener('click', handleFullscreenClick);
             icon.addEventListener('click', handleFullscreenClick);
         });
-    }
+    };
 
     function handleFullscreenClick(event) {
         const icon = event.currentTarget;
         const parentBloc = icon.closest('.photo-bloc');
+
+        if (!parentBloc) {
+            console.error('Bloc parent introuvable pour l\'icône cliquée.');
+            return;
+        }
+
+        const imageSrc = parentBloc.querySelector('.photo-bloc__picture-img')?.src || '';
+        const refText = parentBloc.querySelector('.photo-bloc__hover-ref')?.textContent || 'Inconnu';
+        const catText = parentBloc.querySelector('.photo-bloc__hover-cat')?.textContent || 'Inconnu';
+
+        openFullscreen(imageSrc, refText, catText);
+    }
+
+    window.attachLightboxEvents = function attachLightboxEvents() {
+        const fullscreenIcons = document.querySelectorAll('.photo-bloc__hover-fullscreen');
+
+        fullscreenIcons.forEach((icon) => {
+            icon.removeEventListener('click', handleLightboxClick);
+            icon.addEventListener('click', handleLightboxClick);
+        });
+    };
+
+    window.handleLightboxClick =function handleLightboxClick(event) {
+        event.preventDefault();
+        const icon = event.currentTarget;
+        const parentBloc = icon.closest('.photo-bloc');
+
         if (parentBloc) {
-            const imageSrc = parentBloc.querySelector('.photo-bloc__picture-img')?.src || '';
-            const refText = parentBloc.querySelector('.photo-bloc__hover-ref')?.textContent || '';
-            const catText = parentBloc.querySelector('.photo-bloc__hover-cat')?.textContent || '';
-            openFullscreen(imageSrc, refText, catText);
+            const index = parentBloc.getAttribute('data-index');
+            if (index === null || index.trim() === '') {
+                console.error('Attribut data-index manquant ou vide pour le bloc parent.', parentBloc);
+            } else {
+                openLightbox(index);
+            }
+        } else {
+            console.error('Impossible de trouver le bloc parent pour l’élément fullscreen cliqué.', icon);
         }
     }
 
-    attachFullscreenEvents();
-
-    /**
-     * ===========================
-     * . Gestion de la lightbox
-     * ===========================
-     */
-
     function openLightbox(index) {
-        // Valider l'index avant la conversion
-        if (typeof index !== 'string' || index.trim() === '') {
-            console.error('Index non défini ou vide pour openLightbox :', index);
-            return;
-        }
-    
-        // Convertir index en entier
+
         index = parseInt(index, 10);
         if (isNaN(index) || index < 0) {
-            console.error('Index invalide pour openLightbox :', index);
+            console.error('Index invalide pour la lightbox :', index);
             return;
         }
-    
-        // Créer la liste des photos
+
         const listePhotos = [];
         document.querySelectorAll('.photo-bloc').forEach((photoBloc) => {
             const photo = {
@@ -200,66 +230,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 cat: photoBloc.getAttribute('data-cat') || 'Inconnu',
                 index: parseInt(photoBloc.getAttribute('data-index'), 10) || -1,
             };
-    
+
             if (photo.src && photo.index !== -1) {
                 listePhotos.push(photo);
             } else {
                 console.warn('Photo invalide détectée :', photoBloc, photo);
             }
         });
-    
-        // Vérifier si l'index demandé existe dans la liste
+
         const selectedPhoto = listePhotos.find(photo => photo.index === index);
         if (!selectedPhoto) {
             console.error('Photo non trouvée pour l’index :', index);
             return;
         }
-    
-        // Mettre à jour le contenu du lightbox
-        const fullscreenImg = document.querySelector('#fullscreen-img');
-        const fullscreenRef = document.querySelector('#fullscreen-ref');
-        const fullscreenCat = document.querySelector('#fullscreen-cat');
-    
-        if (fullscreenImg && fullscreenRef && fullscreenCat) {
-            fullscreenImg.src = selectedPhoto.src;
-            fullscreenRef.textContent = selectedPhoto.ref;
-            fullscreenCat.textContent = selectedPhoto.cat;
-        } else {
-            console.error('Éléments du lightbox manquants dans le DOM.');
-        }
+
+        fullscreenImg.src = selectedPhoto.src;
+        fullscreenRef.textContent = selectedPhoto.ref;
+        fullscreenCat.textContent = selectedPhoto.cat;
     }
-    
-    function attachLightboxEvents() {
-        const fullscreenIcons = document.querySelectorAll('.photo-bloc__hover-fullscreen');
-    
-        fullscreenIcons.forEach((icon) => {
-            // Éviter d'attacher l'événement si déjà attaché
-            if (!icon.dataset.eventAttached) {
-                icon.addEventListener('click', handleLightboxClick);
-                icon.dataset.eventAttached = true;  // Marquer comme attaché
-            }
-        });
-    }
-    
-    function handleLightboxClick(event) {
-        event.preventDefault();
-        const icon = event.currentTarget;
-        const parentBloc = icon.closest('.photo-bloc');
-    
-        if (parentBloc) {
-            const index = parentBloc.getAttribute('data-index');
-            if (index === null || index.trim() === '') {
-                console.error('Attribut data-index manquant ou vide pour le bloc parent.', parentBloc);
-            } else {
-                console.log('Index valide détecté :', index);
-                openLightbox(index);
-            }
-        } else {
-            console.error('Impossible de trouver le bloc parent pour l’élément fullscreen cliqué.', icon);
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        attachLightboxEvents();
-    });
+
+    // Appels initiaux
+    window.attachFullscreenEvents();
+    window.attachLightboxEvents();
 });

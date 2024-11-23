@@ -4,34 +4,72 @@
  * ====================================
  * 1. ENQUEUE STYLES ET SCRIPTS
  * ====================================
- * Cette fonction charge les fichiers CSS et JS nécessaires au thème.
- * Elle ajoute également les dépendances externes comme jQuery et Select2.
+ * Cette section charge les fichiers CSS et JS nécessaires au thème
+ * et ajoute des variables globales pour les appels AJAX.
  */
-function mota_theme_enqueue_assets() {
-    // CSS principal du thème
-    wp_enqueue_style('mota-theme-style', get_stylesheet_uri(), [], filemtime(get_stylesheet_directory() . '/style.css'), 'all');
+function mota_enqueue_assets() {
+    // CSS principal
+    wp_enqueue_style(
+        'mota-theme-style',
+        get_stylesheet_uri(),
+        [],
+        filemtime(get_stylesheet_directory() . '/style.css')
+    );
 
     // CSS pour la modale
-    wp_enqueue_style('contact-modal-style', get_template_directory_uri() . '/assets/css/contact-modal.css', [], filemtime(get_template_directory() . '/assets/css/contact-modal.css'), 'all');
+    wp_enqueue_style(
+        'contact-modal-style',
+        get_template_directory_uri() . '/assets/css/contact-modal.css',
+        [],
+        filemtime(get_template_directory() . '/assets/css/contact-modal.css')
+    );
 
-    // Select2 pour les filtres
-    wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
+    // CSS pour Select2 (bibliothèque utilisée pour les filtres)
+    wp_enqueue_style(
+        'select2-css',
+        'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css'
+    );
 
-    // JavaScript principal
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], null, true);
-    wp_enqueue_script('filters-js', get_template_directory_uri() . '/assets/js/filters.js', ['jquery', 'select2-js'], filemtime(get_template_directory() . '/assets/js/filters.js'), true);
-    wp_enqueue_script('theme-scripts', get_template_directory_uri() . '/assets/js/scripts.js', ['jquery'], filemtime(get_template_directory() . '/assets/js/scripts.js'), true);
-    wp_enqueue_script('infinite-scroll', get_template_directory_uri() . '/assets/js/infinite-scroll.js', ['jquery'], filemtime(get_template_directory() . '/assets/js/infinite-scroll.js'), true);
+    // JS principal
+    wp_enqueue_script('jquery'); // Chargement de jQuery
+    wp_enqueue_script(
+        'select2-js',
+        'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js',
+        ['jquery'], null, true
+    );
+    wp_enqueue_script(
+        'filters-js',
+        get_template_directory_uri() . '/assets/js/filters.js',
+        ['jquery', 'select2-js'],
+        filemtime(get_template_directory() . '/assets/js/filters.js'),
+        true
+    );
+    wp_enqueue_script(
+        'theme-scripts',
+        get_template_directory_uri() . '/assets/js/scripts.js',
+        ['jquery'],
+        filemtime(get_template_directory() . '/assets/js/scripts.js'),
+        true
+    );
+    function enqueue_custom_scripts() {
+        // Enqueue ton script principal
+        wp_enqueue_script(
+            'navigation-overlay', // Handle unique
+            get_template_directory_uri() . '/assets/js/navigation-overlay.js', // Chemin vers le fichier
+            array('jquery'), // Dépendances (si nécessaire)
+            '1.0.0', // Version
+            true // Charger dans le footer
+        );
+    }
 
-    // Ajout d'une variable JS globale pour AJAX
-    $ajax_params = ['ajax_url' => admin_url('admin-ajax.php')];
-
-    wp_localize_script('filters-js', 'theme_ajax', $ajax_params);
-    wp_localize_script('infinite-scroll', 'theme_ajax', $ajax_params);
-    wp_localize_script('theme-scripts', 'theme_ajax', $ajax_params);
+    // Variables globales pour AJAX
+    wp_localize_script('filters-js', 'theme_ajax', [
+        'ajax_url' => admin_url('admin-ajax.php'), // URL pour les appels AJAX
+        'nonce' => wp_create_nonce('mota_nonce')   // Sécurité AJAX
+    ]);
 }
-add_action('wp_enqueue_scripts', 'mota_theme_enqueue_assets');
+add_action('wp_enqueue_scripts', 'mota_enqueue_assets');
+add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
 
 /**
  * ====================================
@@ -73,26 +111,30 @@ function mota_get_all_custom_fields($post_id) {
 
 /**
  * ====================================
- * 4. AJAX : CHARGEMENT DES PHOTOS AVEC PAGINATION
+ * AJAX : Charger plus d'articles
  * ====================================
- * Charge plus d'articles pour le CPT "Photos" avec les filtres sélectionnés.
+ * Charge dynamiquement des articles supplémentaires pour le CPT "photo",
+ * en tenant compte des filtres appliqués.
  */
 function load_more_photos_ajax() {
-    // Récupère les paramètres de la requête AJAX
-    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1;
-    $posts_per_page = 8;
-    $category = isset($_POST['category']) ? intval($_POST['category']) : 0;
-    $format = isset($_POST['format']) ? intval($_POST['format']) : 0;
+    check_ajax_referer('mota_nonce', 'nonce'); // Vérification de sécurité AJAX
 
-    // Préparation de la requête WP_Query
+    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1; // Page actuelle
+    $category = isset($_POST['category']) ? intval($_POST['category']) : 0; // ID de catégorie
+    $format = isset($_POST['format']) ? intval($_POST['format']) : 0; // ID de format
+    $order = isset($_POST['order']) ? sanitize_text_field($_POST['order']) : 'DESC'; // Ordre de tri
+
+    // Préparer les arguments de la requête WP_Query
     $args = [
         'post_type' => 'photo',
-        'posts_per_page' => $posts_per_page,
+        'posts_per_page' => 8,
         'paged' => $paged,
         'orderby' => 'date',
-        'order' => 'DESC',
+        'order' => $order,
+        'tax_query' => [], // Initialisation pour ajouter des filtres
     ];
 
+    // Appliquer la catégorie si définie
     if ($category) {
         $args['tax_query'][] = [
             'taxonomy' => 'categorie',
@@ -101,6 +143,7 @@ function load_more_photos_ajax() {
         ];
     }
 
+    // Appliquer le format si défini
     if ($format) {
         $args['tax_query'][] = [
             'taxonomy' => 'format',
@@ -109,27 +152,27 @@ function load_more_photos_ajax() {
         ];
     }
 
-    // Exécution de la requête
-    $custom_query = new WP_Query($args);
+    // Exécuter la requête WP_Query
+    $query = new WP_Query($args);
 
-    if ($custom_query->have_posts()) {
-        ob_start(); // Capture la sortie
-        while ($custom_query->have_posts()) {
-            $custom_query->the_post();
-            get_template_part('templates-parts/photo-bloc'); // Affiche chaque bloc
+    if ($query->have_posts()) {
+        ob_start();
+        while ($query->have_posts()) {
+            $query->the_post();
+            get_template_part('templates-parts/photo-bloc'); // Chargement du template
         }
-        $html = ob_get_clean(); // Récupère le HTML généré
+        $html = ob_get_clean();
         wp_reset_postdata();
-
-        wp_send_json_success(['html' => $html]);
+        wp_send_json_success(['html' => $html]); // Retourner le HTML généré
     } else {
-        wp_send_json_error(['message' => 'Aucun résultat trouvé.']);
+        wp_send_json_error(['message' => 'Aucun autre article disponible.']);
     }
 
     wp_die(); // Terminer proprement la requête AJAX
 }
 add_action('wp_ajax_load_more_photos', 'load_more_photos_ajax');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos_ajax');
+
 
 /**
  * ====================================
@@ -228,3 +271,42 @@ function filter_photos_ajax() {
 }
 add_action('wp_ajax_filter_photos', 'filter_photos_ajax');
 add_action('wp_ajax_nopriv_filter_photos', 'filter_photos_ajax');
+
+/**
+ * ====================================
+ * 7. DATA POUR NAV OVERLAY
+ * ====================================
+ * Récupère les informations pour utiliser les ID des articles.
+ */
+function enqueue_navigation_overlay_data() {
+    // Récupération de tous les articles du CPT "Photos"
+    $args = array(
+        'post_type'      => 'photo',
+        'posts_per_page' => -1, // Charger tous les articles
+        'orderby'        => 'ID',
+        'order'          => 'DESC',
+    );
+
+    $query = new WP_Query($args);
+    $photos = array();
+
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post();
+            $photos[] = array(
+                'id'    => get_the_ID(),
+                'src'   => get_the_post_thumbnail_url(),
+                'ref'   => get_field('reference_photo'),
+                'cat'   => !empty(get_the_terms(get_the_ID(), 'categorie')) 
+                    ? get_the_terms(get_the_ID(), 'categorie')[0]->name 
+                    : '',
+            );
+        endwhile;
+        wp_reset_postdata();
+    endif;
+
+    // Localiser les données dans une variable JS
+    wp_localize_script('navigation-overlay', 'photoData', array(
+        'photos' => $photos,
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_navigation_overlay_data');
