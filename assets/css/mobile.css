@@ -1,0 +1,182 @@
+/*
+Theme Name: mota-theme
+Theme URI: https://
+Author: Starrpoek
+Author URI: https://
+Description: Thème personnalisé pour la photographe Nathalie MOTA
+Requires at least: WordPress 5.0
+Version: 1.0.0
+Text Domain: motatheme
+*/
+
+@media (max-width: 768px) {
+    /* Page principale */
+    #home {
+        width: auto;
+    }
+    .home-hero__title {
+        width: 18rem !important;
+        font-size: 1.72rem;
+        -webkit-text-stroke: 0.8px white;
+    }
+    .container-header img {
+        width: auto;
+        height: auto;
+        margin: 0.5rem;
+    }
+    #navigation {
+        width: auto;
+        padding-left: 13rem;
+    }
+    .menu {
+        width: auto;
+    }
+    #header nav ul li {
+        padding: 0;
+    }
+    #filters {
+        flex-direction: column;
+        align-items: center;
+        width: auto;
+        margin: 1.62rem 3.06rem 1.56rem 3.5rem;
+    }
+    .filters-taxonomy {
+        display: flex;
+        flex-direction: column;
+    }
+    .photo-bloc-container,
+    .photo-bloc,
+    .photo-bloc__picture,
+    .photo-bloc__hover {
+        width: 19.85rem;
+        height: 17.42rem;
+    }
+    #footer {
+        display: flex;
+        flex-direction: column;
+        height: 12.93rem;
+    }
+    #footer nav {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+    .footer-links {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    /* Overlay */
+    .nav-container__prev {
+        left: -4rem;
+        top: 27rem;
+    }
+    .nav-container__next {
+        right: -4rem;
+        top: 27rem;
+    }
+    .fullscreen__txt {
+        height: auto;
+        align-items: baseline;
+    }
+
+    /* Page Single-photo */
+    .single-photo__page {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+    }
+    .bloc-details__category-scf h2 {
+        width: 16.375rem;
+        font-size: 2.875rem;
+        line-height: 3rem;
+        margin-left: 3.5rem;
+    }
+    .bloc-details__category-scf p {
+        width: auto;
+    }
+    .category-scf {
+        margin-left: 3.5rem;
+    }
+    .bloc-details {
+        flex-direction: column-reverse;
+
+    } 
+    .bloc-details__picture {
+        align-self: normal;
+        margin : 1.25rem 3.37rem 0rem 3.5rem;
+    }
+    .bloc-contact {
+        flex-direction: column;
+        height: 8.31rem;
+    }
+    .bloc-contact__form {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        margin-top: 1.5rem;
+        gap: 0.94rem;
+        margin-bottom: 1.4rem;
+    }
+    .form__button-contact {
+        width: 17rem;
+    }
+    .bloc-contact__thumbnails-nav {
+        display: none;
+    }
+    .single-photo__page-more {
+        align-items: center;
+        padding-bottom: 1.59rem;
+    }
+    .single-photo__page-more h3 {
+        padding-top: 1.5rem;
+        padding-bottom: 1.25rem;
+    }
+    .page-more__content {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .photo-bloc-container {
+        width: 19.85rem !important;
+        height: 17.42rem !important;
+        overflow: visible !important;
+    }
+
+    /* Modale de contact */
+    #contactModal {
+        width: 17.875rem;
+        height: auto;
+        top: 2rem;
+        left: 4.5rem;
+        padding: 0;
+        background-color: rgba(0, 0, 0, 0.8) !important;
+    }
+    .contact-modal__header {
+        margin-top: 1.5rem;
+        height: 3.4375rem;
+    }
+    .contact-modal__form-label {
+        margin-bottom: 0.94rem;
+    }
+    .modal-content {
+        width: 100%;
+        height: 100%;
+    }
+    .modal-content form {
+        margin-top: 0.87rem;
+    }
+    .modal-content input {
+        width: 11.875rem;
+
+    }
+    .modal-content textarea {
+        width: 11.875rem;
+        height: auto;
+        margin-bottom: 1.19rem;
+    }
+    .modal-content input[type="submit"] {
+        width: 11.875rem;
+        margin-bottom: 1.5rem;
+    }
+}

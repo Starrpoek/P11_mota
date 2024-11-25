@@ -1,3 +1,13 @@
+/*
+Theme Name: mota-theme
+Theme URI: https://
+Author: Starrpoek
+Author URI: https://
+Description: Thème personnalisé pour la photographe Nathalie MOTA
+Requires at least: WordPress 5.0
+Version: 1.0.0
+Text Domain: motatheme
+*/
 
 #contactModal {
     display: none;

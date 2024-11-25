@@ -24,6 +24,14 @@ function mota_enqueue_assets() {
         filemtime(get_template_directory() . '/assets/css/contact-modal.css')
     );
 
+    // CSS pour le format mobile
+    wp_enqueue_style(
+        'mobile-style',
+        get_template_directory_uri() . '/assets/css/mobile.css',
+        [],
+        filemtime(get_template_directory() . '/assets/css/mobile.css')
+    );
+
     // CSS pour Select2 (bibliothèque utilisée pour les filtres)
     wp_enqueue_style(
         'select2-css',
