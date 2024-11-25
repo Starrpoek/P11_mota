@@ -252,4 +252,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // Appels initiaux
     window.attachFullscreenEvents();
     window.attachLightboxEvents();
+
+    const hamMenu = document.querySelector(".ham-menu");
+    const offScreenMenu = document.querySelector(".off-screen-menu");
+    const body = document.body;
+    
+    hamMenu.addEventListener("click", () => {
+      hamMenu.classList.toggle("active");
+      offScreenMenu.classList.toggle("active");
+    
+      // Ajouter ou retirer la classe no-scroll
+      if (offScreenMenu.classList.contains("active")) {
+        body.classList.add("no-scroll");
+      } else {
+        body.classList.remove("no-scroll");
+      }
+    });
 });

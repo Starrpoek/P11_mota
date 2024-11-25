@@ -26,5 +26,20 @@
                 ) );
                 ?>
             </nav>
+            <div class="off-screen-menu">
+                <ul class="off-screen-menu__nav">
+                    <li><a href="http://localhost/mota/wordpress/" class="off-screen-menu__navHome" >Accueil</a></li>
+                    <li><a href="http://localhost/mota/wordpress/a-propos/" class="off-screen-menu__navMore">à propos</a></li>
+                    <!-- <li><a href="#contactModal" id="openPhotoModal" class="off-screen-menu__navContact">contact</a></li> -->
+                </ul>
+            </div>
+
+            <nav>
+                <div class="ham-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
         </div>
     </header>
