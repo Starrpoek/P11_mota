@@ -120,3 +120,25 @@ input:focus {
 .wpcf7-spinner {
   display: none;
 }
+
+@media (max-width: 768px) {
+  .page-id-93 #contactModal {
+      display: block;
+      height: 36.43rem;
+      top: 8rem;
+  }
+  .page-id-93 #footer {
+    position: fixed;
+    top: 41.43rem;
+    left: 7rem;
+  }
+  .page-id-93 .footer-links {
+    gap: 0.5rem;
+  }
+  .page-id-93 #footer nav {
+    margin-bottom: 0.5rem;
+  }
+  .page-id-93 nav {
+    height: auto;
+  }
+}

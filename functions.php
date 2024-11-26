@@ -318,3 +318,10 @@ function enqueue_navigation_overlay_data() {
     ));
 }
 add_action('wp_enqueue_scripts', 'enqueue_navigation_overlay_data');
+
+function enqueue_contact_modal_script() {
+    if (is_page_template('template-contact.php')) {
+        wp_enqueue_script('contact-modal-script', get_stylesheet_directory_uri() . '/assets/js/contact-modal.js', array('jquery'), null, true);
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_contact_modal_script');
