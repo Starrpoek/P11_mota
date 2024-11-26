@@ -19,6 +19,7 @@ jQuery(document).ready(function ($) {
     function resetLoadMoreButton() {
         loadMoreButton.prop("disabled", false); // Réactiver le bouton
         loadMoreButton.text("Charger plus"); // Réinitialiser le texte
+        loadMoreButton.fadeIn(); // Réafficher le bouton
     }
 
     /**
@@ -118,7 +119,7 @@ jQuery(document).ready(function ($) {
                     attachLightboxEvents(); // Réattacher les événements lightbox
                 } else {
                     loadMoreButton.text("Aucun autre article disponible");
-                    loadMoreButton.prop("disabled", true); // Désactiver le bouton
+                    loadMoreButton.fadeOut(); // Cacher le bouton avec un effet de fondu
                 }
             },
             error: function () {
