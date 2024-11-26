@@ -125,7 +125,11 @@ input:focus {
   .page-id-93 #contactModal {
       display: block;
       height: 36.43rem;
-      top: 8rem;
+      top: 8.5rem;
+  }
+  .close-button,
+  .page-id-93 .close-button {
+    top: 0;
   }
   .page-id-93 #footer {
     position: fixed;
@@ -135,8 +139,9 @@ input:focus {
   .page-id-93 .footer-links {
     gap: 0.5rem;
   }
+  #footer nav,
   .page-id-93 #footer nav {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem !important;
   }
   .page-id-93 nav {
     height: auto;

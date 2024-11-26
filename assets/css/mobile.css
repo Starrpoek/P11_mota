@@ -72,19 +72,6 @@ Text Domain: motatheme
         flex-direction: column;
         gap: 1.5rem;
     }
-    /* Overlay */
-    .nav-container__prev {
-        left: -4rem;
-        top: 27rem;
-    }
-    .nav-container__next {
-        right: -4rem;
-        top: 27rem;
-    }
-    .fullscreen__txt {
-        height: auto;
-        align-items: baseline;
-    }
 
     /* Page Single-photo */
     .single-photo__page {
@@ -147,6 +134,12 @@ Text Domain: motatheme
         width: 19.85rem !important;
         height: 17.42rem !important;
         overflow: visible !important;
+    }
+    .photo-bloc__hover {
+        display: none;
+    }
+    .photo-bloc__picture-img {
+        cursor: pointer;
     }
 
     /* Modale de contact */
@@ -263,5 +256,7 @@ Text Domain: motatheme
         top: 50%;
         transform: translate(-50%, -50%) rotate(-45deg);
     }
-    
+    .fullscreen-overlay {
+        display: none;
+    }
 }
