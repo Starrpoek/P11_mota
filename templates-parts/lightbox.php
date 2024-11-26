@@ -1,5 +1,25 @@
+<?php 
+$refPhoto = get_field("reference_photo");
+$post = get_the_ID();
+$category = get_the_terms($post, "categorie");
+
+// Vérifier si la catégorie existe et la définir correctement
+if (!empty($category) && !is_wp_error($category)) {
+    $categoryPhoto = $category[0]->name;
+} else {
+    $categoryPhoto = 'aucune-categorie'; // Définir une valeur par défaut si la catégorie est vide
+}
+
+$typePhoto = get_field("type");
+$format = get_the_terms($post, "format");
+$formatPhoto = !empty($format) && !is_wp_error($format) ? $format[0]->name : 'aucun-format';
+$datePhoto = get_the_date("Y");
+$url = get_permalink();
+$id = get_the_ID();    
+?>
+
 <!-- Conteneur pour le mode plein écran -->
-<div class="fullscreen-overlay" data-index="0">
+<div class="fullscreen-overlay" data-index="0" data-cat="<?php echo esc_attr($categoryPhoto); ?>">
     <div class="fullscreen-overlay__content">
         <!-- Bouton de fermeture -->
         <img id="close-overlay" src="<?php echo get_template_directory_uri(); ?>/assets/img/close.svg" alt="Fermer" class="fullscreen-overlay__close">

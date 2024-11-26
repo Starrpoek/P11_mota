@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let photoIDs = []; // Liste des IDs disponibles
     let currentID = null; // ID actuellement affiché
+    let currentCategory = null; // Catégorie actuelle
 
     /**
      * Initialiser les données depuis la variable photoData
@@ -18,12 +19,42 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Charger les IDs et les trier
-        photoIDs = photoData.photos.map(photo => photo.id).sort((a, b) => b - a); // Tri décroissant
-        console.log('Liste des IDs disponibles :', photoIDs);
+        // Récupérer la catégorie de la photo actuelle (page utilisant le template `single-photo.php`)
+        if (document.body.classList.contains('single-photo')) {
+            // Supposons que l'ID de la photo actuelle est déjà défini dans l'attribut `data-index` de l'overlay
+            currentID = parseInt(overlay.getAttribute('data-index'), 10);
+            currentCategory = overlay.getAttribute('data-cat');
 
-        // Définit le premier ID comme celui actuel
-        currentID = photoIDs[0];
+            if (!currentCategory) {
+                console.error("Aucune catégorie trouvée pour la photo actuelle.");
+                return;
+            }
+
+            // Filtrer les photos pour ne garder que celles de la même catégorie
+            photoIDs = photoData.photos
+                .filter(photo => photo.cat === currentCategory)
+                .map(photo => photo.id)
+                .sort((a, b) => b - a);
+
+            console.log(`Photos filtrées pour la catégorie "${currentCategory}" :`, photoIDs);
+
+            // S'assurer que l'ID actuel est bien présent dans la liste filtrée
+            if (!photoIDs.includes(currentID)) {
+                console.warn(`ID actuel (${currentID}) non présent dans la catégorie "${currentCategory}".`);
+                currentID = photoIDs.length > 0 ? photoIDs[0] : null;
+            }
+        } else {
+            // Pour les autres pages, charger toutes les photos
+            photoIDs = photoData.photos.map(photo => photo.id).sort((a, b) => b - a);
+            currentID = photoIDs.length > 0 ? photoIDs[0] : null;
+        }
+
+        // Afficher la première photo si elle existe
+        if (currentID !== null) {
+            displayPhotoByID(currentID);
+        } else {
+            console.error('Aucune photo disponible après le filtrage.');
+        }
     }
 
     /**
