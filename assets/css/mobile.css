@@ -26,7 +26,7 @@ Text Domain: motatheme
         margin-left: 2.5rem;
     }
     .no-scroll {
-        overflow: hidden; /* Désactive le défilement */
+        overflow: hidden;
       }
     #header a {
         margin: 0;

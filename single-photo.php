@@ -49,7 +49,7 @@ get_header() ?>
                 function get_previous_post_in_loop($post) {
                     $previous_post = get_previous_post();
                     if (empty($previous_post)) {
-                        // Si aucun article précédent, retourne le dernier article
+                        
                         $previous_post = get_posts([
                         'numberposts' => 1,
                         'order' => 'DESC',
@@ -61,7 +61,7 @@ get_header() ?>
                 function get_next_post_in_loop($post) {
                     $next_post = get_next_post();
                     if (empty($next_post)) {
-                        // Si aucun article suivant, retourne le premier article
+                        
                         $next_post = get_posts([
                         'numberposts' => 1,
                         'order' => 'ASC',

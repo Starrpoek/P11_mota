@@ -39,7 +39,7 @@ function mota_enqueue_assets() {
     );
 
     // JS principal
-    wp_enqueue_script('jquery'); // Chargement de jQuery
+    wp_enqueue_script('jquery'); 
     wp_enqueue_script(
         'select2-js',
         'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js',
@@ -62,18 +62,18 @@ function mota_enqueue_assets() {
     function enqueue_custom_scripts() {
         // Enqueue ton script principal
         wp_enqueue_script(
-            'navigation-overlay', // Handle unique
-            get_template_directory_uri() . '/assets/js/navigation-overlay.js', // Chemin vers le fichier
-            array('jquery'), // Dépendances (si nécessaire)
-            '1.0.0', // Version
-            true // Charger dans le footer
+            'navigation-overlay',
+            get_template_directory_uri() . '/assets/js/navigation-overlay.js', 
+            array('jquery'), 
+            '1.0.0', 
+            true 
         );
     }
 
     // Variables globales pour AJAX
     wp_localize_script('filters-js', 'theme_ajax', [
-        'ajax_url' => admin_url('admin-ajax.php'), // URL pour les appels AJAX
-        'nonce' => wp_create_nonce('mota_nonce')   // Sécurité AJAX
+        'ajax_url' => admin_url('admin-ajax.php'), 
+        'nonce' => wp_create_nonce('mota_nonce')   
     ]);
 }
 add_action('wp_enqueue_scripts', 'mota_enqueue_assets');
@@ -125,12 +125,12 @@ function mota_get_all_custom_fields($post_id) {
  * en tenant compte des filtres appliqués.
  */
 function load_more_photos_ajax() {
-    check_ajax_referer('mota_nonce', 'nonce'); // Vérification de sécurité AJAX
+    check_ajax_referer('mota_nonce', 'nonce'); 
 
-    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1; // Page actuelle
-    $category = isset($_POST['category']) ? intval($_POST['category']) : 0; // ID de catégorie
-    $format = isset($_POST['format']) ? intval($_POST['format']) : 0; // ID de format
-    $order = isset($_POST['order']) ? sanitize_text_field($_POST['order']) : 'DESC'; // Ordre de tri
+    $paged = isset($_POST['page']) ? intval($_POST['page']) : 1; 
+    $category = isset($_POST['category']) ? intval($_POST['category']) : 0; 
+    $format = isset($_POST['format']) ? intval($_POST['format']) : 0; 
+    $order = isset($_POST['order']) ? sanitize_text_field($_POST['order']) : 'DESC'; 
 
     // Préparer les arguments de la requête WP_Query
     $args = [
@@ -139,7 +139,7 @@ function load_more_photos_ajax() {
         'paged' => $paged,
         'orderby' => 'date',
         'order' => $order,
-        'tax_query' => [], // Initialisation pour ajouter des filtres
+        'tax_query' => [], 
     ];
 
     // Appliquer la catégorie si définie
@@ -167,16 +167,16 @@ function load_more_photos_ajax() {
         ob_start();
         while ($query->have_posts()) {
             $query->the_post();
-            get_template_part('templates-parts/photo-bloc'); // Chargement du template
+            get_template_part('templates-parts/photo-bloc'); 
         }
         $html = ob_get_clean();
         wp_reset_postdata();
-        wp_send_json_success(['html' => $html]); // Retourner le HTML généré
+        wp_send_json_success(['html' => $html]); 
     } else {
         wp_send_json_error(['message' => 'Aucun autre article disponible.']);
     }
 
-    wp_die(); // Terminer proprement la requête AJAX
+    wp_die(); 
 }
 add_action('wp_ajax_load_more_photos', 'load_more_photos_ajax');
 add_action('wp_ajax_nopriv_load_more_photos', 'load_more_photos_ajax');
@@ -290,7 +290,7 @@ function enqueue_navigation_overlay_data() {
     // Récupération de tous les articles du CPT "Photos"
     $args = array(
         'post_type'      => 'photo',
-        'posts_per_page' => -1, // Charger tous les articles
+        'posts_per_page' => -1, 
         'orderby'        => 'ID',
         'order'          => 'DESC',
     );

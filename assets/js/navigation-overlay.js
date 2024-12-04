@@ -1,8 +1,8 @@
 /**
- * 
- * - 
- * - 
- * - 
+ * Gestion de la navigation et de l'overlay
+ * - Affichage de la lightbox
+ * - Récupération des ID
+ * - Triage des ID
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Récupérer la catégorie de la photo actuelle (page utilisant le template `single-photo.php`)
         if (document.body.classList.contains('single-photo')) {
-            // Supposons que l'ID de la photo actuelle est déjà défini dans l'attribut `data-index` de l'overlay
+            
             currentID = parseInt(overlay.getAttribute('data-index'), 10);
             currentCategory = overlay.getAttribute('data-cat');
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fullscreenImg.src = photo.src || '';
         fullscreenRef.textContent = photo.ref || 'Référence inconnue';
         fullscreenCat.textContent = photo.cat || 'Catégorie inconnue';
-        overlay.setAttribute('data-index', id); // Met à jour l'attribut data-index
+        overlay.setAttribute('data-index', id);
         currentID = id;
     }
 

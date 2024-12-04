@@ -402,20 +402,18 @@ select {
     overflow: hidden !important;
     border-radius: 10px;
     margin-top: 30px;
-        /* Effet de transition initial */
-        opacity: 0;
-        transform: translateY(-10px); /* Menu légèrement décalé vers le haut */
-        transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 /* Lorsqu'il est visible (Select2 applique automatiquement cette classe) */
 .select2-container .select2-dropdown.select2-dropdown--below {
     opacity: 1;
-    transform: translateY(0); /* Retour à la position d'origine */
+    transform: translateY(0);
 }
-
 .select2-container .select2-dropdown.select2-dropdown--above {
     opacity: 1;
-    transform: translateY(0); /* Position corrigée pour l'ouverture vers le haut */
+    transform: translateY(0);
 }
 .select2-container .select2-dropdown .select2-results .select2-results__options {
     max-height: 500px;

@@ -3,11 +3,10 @@ $refPhoto = get_field("reference_photo");
 $post = get_the_ID();
 $category = get_the_terms($post, "categorie");
 
-// Vérifier si la catégorie existe et la définir correctement
 if (!empty($category) && !is_wp_error($category)) {
     $categoryPhoto = $category[0]->name;
 } else {
-    $categoryPhoto = 'aucune-categorie'; // Définir une valeur par défaut si la catégorie est vide
+    $categoryPhoto = 'aucune-categorie';
 }
 
 $typePhoto = get_field("type");

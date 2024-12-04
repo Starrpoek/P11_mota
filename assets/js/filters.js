@@ -52,31 +52,31 @@ jQuery(document).ready(function ($) {
 
         // Requête AJAX
         $.ajax({
-            url: theme_ajax.ajax_url, // URL définie dans wp_localize_script
+            url: theme_ajax.ajax_url,
             type: "POST",
             data: {
-                action: "filter_photos", // Action définie dans functions.php
-                nonce: theme_ajax.nonce, // Sécurité AJAX
-                category: category, // Filtre catégorie
-                format: format, // Filtre format
-                order: order, // Ordre de tri
-                page: 1, // Réinitialiser à la première page
+                action: "filter_photos",
+                nonce: theme_ajax.nonce,
+                category: category,
+                format: format,
+                order: order,
+                page: 1,
             },
             beforeSend: function () {
-                $("#photos").html('<p>Chargement des photos...</p>'); // Afficher un message temporaire
+                $("#photos").html('<p>Chargement des photos...</p>');
             },
             success: function (response) {
                 if (response.success) {
-                    $("#photos").html(response.data.html); // Mettre à jour les articles
-                    attachFullscreenEvents(); // Réattacher les événements fullscreen
-                    attachLightboxEvents(); // Réattacher les événements lightbox
+                    $("#photos").html(response.data.html);
+                    attachFullscreenEvents();
+                    attachLightboxEvents();
                 } else {
-                    $("#photos").html('<p>Aucune photo trouvée.</p>'); // Afficher un message d'erreur
+                    $("#photos").html('<p>Aucune photo trouvée.</p>');
                 }
             },
             error: function () {
                 console.error("Erreur lors du chargement des photos.");
-                $("#photos").html('<p>Une erreur est survenue.</p>'); // Afficher un message d'erreur
+                $("#photos").html('<p>Une erreur est survenue.</p>');
             },
         });
     }
@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
      * - Charge des articles supplémentaires via AJAX.
      */
     function loadMorePhotos() {
-        page++; // Passer à la page suivante
+        page++;
 
         // Récupérer les valeurs des filtres
         const category = $("#filter-category").val();
@@ -101,25 +101,25 @@ jQuery(document).ready(function ($) {
             url: theme_ajax.ajax_url,
             type: "POST",
             data: {
-                action: "load_more_photos", // Action définie dans functions.php
-                nonce: theme_ajax.nonce, // Sécurité AJAX
-                category: category, // Filtre catégorie
-                format: format, // Filtre format
-                order: order, // Ordre de tri
-                page: page, // Charger la page suivante
+                action: "load_more_photos",
+                nonce: theme_ajax.nonce,
+                category: category,
+                format: format,
+                order: order,
+                page: page,
             },
             beforeSend: function () {
-                loadMoreButton.text("Chargement..."); // Indiquer que ça charge
+                loadMoreButton.text("Chargement...");
             },
             success: function (response) {
                 if (response.success) {
-                    $("#photos").append(response.data.html); // Ajouter les nouveaux articles
-                    loadMoreButton.text("Charger plus"); // Réinitialiser le texte
-                    attachFullscreenEvents(); // Réattacher les événements fullscreen
-                    attachLightboxEvents(); // Réattacher les événements lightbox
+                    $("#photos").append(response.data.html);
+                    loadMoreButton.text("Charger plus");
+                    attachFullscreenEvents();
+                    attachLightboxEvents();
                 } else {
                     loadMoreButton.text("Aucun autre article disponible");
-                    loadMoreButton.fadeOut(); // Cacher le bouton avec un effet de fondu
+                    loadMoreButton.fadeOut();u
                 }
             },
             error: function () {
@@ -134,8 +134,8 @@ jQuery(document).ready(function ($) {
      * ==============================
      */
     $(".filter-select").select2({
-        minimumResultsForSearch: -1, // Désactive la recherche dans Select2
-        dropdownParent: $(".filter-select").parent(), // Définit le parent pour le menu déroulant
+        minimumResultsForSearch: -1,
+        dropdownParent: $(".filter-select").parent(),
     });
     
     $(".filter-select").on("select2:open", function () {
@@ -145,7 +145,7 @@ jQuery(document).ready(function ($) {
         dropdown.css({
             opacity: 0,
             transform: "translateY(-10px)",
-            transition: "none", // Empêche les transitions lors de la réinitialisation
+            transition: "none",
         });
     
         // Appliquer les transitions pour l'effet d'ouverture
@@ -153,7 +153,7 @@ jQuery(document).ready(function ($) {
             dropdown.css({
                 opacity: 1,
                 transform: "translateY(0)",
-                transition: "opacity 0.3s ease, transform 0.3s ease", // Réapplique la transition fluide
+                transition: "opacity 0.3s ease, transform 0.3s ease",
             });
         }, 0);
     });
@@ -168,16 +168,13 @@ jQuery(document).ready(function ($) {
             transition: "opacity 0.3s ease, transform 0.3s ease",
         });
     
-        // Optionnel : supprimer la transition après la fermeture pour éviter les conflits
         setTimeout(() => {
             dropdown.css({
-                transition: "none", // Supprime la transition pour éviter des résidus
+                transition: "none",
             });
-        }, 300); // Correspond à la durée de la transition (0.3s)
+        }, 300);
     });
     
-    
-
     // Lancer le filtrage lorsqu'un filtre est modifié
     $("#filter-category, #filter-format, #filter-order").on("change", filterPhotos);
 
