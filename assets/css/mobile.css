@@ -141,6 +141,9 @@ Text Domain: motatheme
     .photo-bloc__picture-img {
         cursor: pointer;
     }
+    .select2-results__options {
+        margin-top: 1rem !important;
+    }
 
     /* Modale de contact */
     #contactModal {

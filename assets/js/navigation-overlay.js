@@ -1,3 +1,10 @@
+/**
+ * 
+ * - 
+ * - 
+ * - 
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.querySelector('.fullscreen-overlay');
     const fullscreenImg = document.getElementById('fullscreen-img');

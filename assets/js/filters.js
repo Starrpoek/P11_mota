@@ -135,7 +135,48 @@ jQuery(document).ready(function ($) {
      */
     $(".filter-select").select2({
         minimumResultsForSearch: -1, // Désactive la recherche dans Select2
+        dropdownParent: $(".filter-select").parent(), // Définit le parent pour le menu déroulant
     });
+    
+    $(".filter-select").on("select2:open", function () {
+        const dropdown = $(".select2-container .select2-dropdown");
+        
+        // Réinitialiser les styles pour préparer l'effet d'ouverture
+        dropdown.css({
+            opacity: 0,
+            transform: "translateY(-10px)",
+            transition: "none", // Empêche les transitions lors de la réinitialisation
+        });
+    
+        // Appliquer les transitions pour l'effet d'ouverture
+        setTimeout(() => {
+            dropdown.css({
+                opacity: 1,
+                transform: "translateY(0)",
+                transition: "opacity 0.3s ease, transform 0.3s ease", // Réapplique la transition fluide
+            });
+        }, 0);
+    });
+    
+    $(".filter-select").on("select2:close", function () {
+        const dropdown = $(".select2-container .select2-dropdown");
+        
+        // Appliquer les transitions pour l'effet de fermeture
+        dropdown.css({
+            opacity: 0,
+            transform: "translateY(-10px)",
+            transition: "opacity 0.3s ease, transform 0.3s ease",
+        });
+    
+        // Optionnel : supprimer la transition après la fermeture pour éviter les conflits
+        setTimeout(() => {
+            dropdown.css({
+                transition: "none", // Supprime la transition pour éviter des résidus
+            });
+        }, 300); // Correspond à la durée de la transition (0.3s)
+    });
+    
+    
 
     // Lancer le filtrage lorsqu'un filtre est modifié
     $("#filter-category, #filter-format, #filter-order").on("change", filterPhotos);

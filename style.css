@@ -133,6 +133,9 @@ h3 {
     display: flex;
     gap: 5.38rem;
 }
+#footer p {
+    margin-left: 0 !important;
+}
 /* HEADER + FOOTER */
 #header,
 #footer {
@@ -399,6 +402,20 @@ select {
     overflow: hidden !important;
     border-radius: 10px;
     margin-top: 30px;
+        /* Effet de transition initial */
+        opacity: 0;
+        transform: translateY(-10px); /* Menu légèrement décalé vers le haut */
+        transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* Lorsqu'il est visible (Select2 applique automatiquement cette classe) */
+.select2-container .select2-dropdown.select2-dropdown--below {
+    opacity: 1;
+    transform: translateY(0); /* Retour à la position d'origine */
+}
+
+.select2-container .select2-dropdown.select2-dropdown--above {
+    opacity: 1;
+    transform: translateY(0); /* Position corrigée pour l'ouverture vers le haut */
 }
 .select2-container .select2-dropdown .select2-results .select2-results__options {
     max-height: 500px;
@@ -657,10 +674,28 @@ select {
     text-transform: uppercase;
 }
 
-
-
-
-/* Test */
 .off-screen-menu {
     display: none;
+}
+.page-id-71 .is-layout-flex,
+.page-id-73 .is-layout-flex,
+.page-id-75 .is-layout-flex {
+    align-items: center !important;
+    margin: 2rem 10rem 2rem 10rem !important;
+}
+.page-id-71 h1,
+.page-id-73 h1,
+.page-id-75 h1 {
+    margin-top: 2rem;
+    margin-left: 10rem;
+}
+.page-id-71 h2 {
+    align-self: flex-start;
+    font-size: 2rem;
+    text-decoration: underline;
+}
+.page-id-71 p,
+.page-id-73 p,
+.page-id-75 p {
+    margin-left: 10rem;
 }

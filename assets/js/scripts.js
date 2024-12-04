@@ -4,36 +4,37 @@ document.addEventListener('DOMContentLoaded', function () {
  * 1. Gestion des modales
  * ===========================
  */
+
     const openModalButton = document.querySelector('a[href="#contactModal"]');
     const openPhotoModalButton = document.getElementById('openPhotoModal');
     const modal = document.getElementById('contactModal');
     const closeModalButton = document.getElementById('closeModal');
-    const form = modal?.querySelector('form'); // Sélectionner le formulaire dans la modale
+    const form = modal?.querySelector('form');
 
-    function openModal(event) {
-        event.preventDefault();
-        if (modal) {
-            modal.style.display = 'block';
-            const referenceValue = event.target?.dataset.reference || '';
-            const formReferenceField = document.getElementById('reference');
+        function openModal(event) {
+            event.preventDefault();
+            if (modal) {
+                modal.classList.add('visible');
+                const referenceValue = event.target?.dataset.reference || '';
+                const formReferenceField = document.getElementById('reference');
             if (formReferenceField) formReferenceField.value = referenceValue;
+            }
         }
-    }
 
-    function closeModal() {
-        if (modal) {
-            modal.style.display = 'none';
-            if (form) form.reset(); // Réinitialiser le formulaire à chaque fermeture de la modale
+        function closeModal() {
+            if (modal) {
+                modal.classList.remove('visible');
+            if (form) form.reset();
+            }
         }
-    }
 
     openModalButton?.addEventListener('click', openModal);
     openPhotoModalButton?.addEventListener('click', openModal);
     closeModalButton?.addEventListener('click', closeModal);
+
     window.addEventListener('click', (event) => {
         if (event.target === modal) closeModal();
     });
-
 
     /**
      * ===========================
