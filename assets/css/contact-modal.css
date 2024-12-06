@@ -134,10 +134,14 @@ input:focus {
       display: block;
       height: 36.43rem;
       top: 8.5rem;
+      background-color: #fefefe !important;
+  }
+  .page-id-93 .modal-content {
+    left: 9rem !important;
   }
   .close-button,
   .page-id-93 .close-button {
-    top: 0;
+    display: none;
   }
   .page-id-93 #footer {
     position: fixed;
@@ -150,8 +154,5 @@ input:focus {
   #footer nav,
   .page-id-93 #footer nav {
     margin-bottom: 0.5rem !important;
-  }
-  .page-id-93 nav {
-    height: auto;
   }
 }

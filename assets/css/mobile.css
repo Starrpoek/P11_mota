@@ -68,6 +68,14 @@ Text Domain: motatheme
         padding: 0;
         margin-bottom: 1.5rem;
     }
+    .page-id-93 #footer {
+        top: 45.43rem !important;
+        left: 17rem !important;
+        height: 4.93rem !important;
+    }
+    .page-id-93 #footer nav {
+        margin-bottom: -1.5rem !important;
+    }
     .footer-links {
         flex-direction: column;
         gap: 1.5rem;
@@ -210,11 +218,11 @@ Text Domain: motatheme
         background-color: #e00000;
         height: 100vh;
         width: 100%;
-        max-width: 450px;
+        /* max-width: 450px; */
         position: fixed;
         top: 125px;
         z-index: 11;
-        right: -450px;
+        right: -768px;
         display: flex;
         flex-direction: column;
         align-items: center;    
@@ -284,5 +292,11 @@ Text Domain: motatheme
     }
     .fullscreen-overlay {
         display: none;
+    }
+}
+
+@media (max-width: 425px) {
+    .container-header img {
+        margin-left: 1.5rem;
     }
 }
