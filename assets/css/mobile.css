@@ -72,6 +72,24 @@ Text Domain: motatheme
         flex-direction: column;
         gap: 1.5rem;
     }
+    .page-id-75 h1,
+    .page-id-71 h1,
+    .page-id-73 h1 {
+        font-size: 20px;
+        margin-left: 5rem;
+    }
+    .page-id-71 h2 {
+        font-size: 16px;
+        margin-left: 5rem;
+    }
+    .page-id-75 p,
+    .page-id-71 p,
+    .page-id-73 p {
+        margin-left: 5rem;
+    }
+    .page-id-71 .is-layout-flex {
+        margin: 0.5rem 1rem !important;
+    }
 
     /* Page Single-photo */
     .single-photo__page {
@@ -154,6 +172,11 @@ Text Domain: motatheme
         padding: 0;
         background-color: rgba(0, 0, 0, 0.8) !important;
     }
+    .page-id-93 #contactModal {
+        opacity: 1;
+        visibility: visible;
+    } 
+
     .contact-modal__header {
         margin-top: 1.5rem;
         height: 3.4375rem;

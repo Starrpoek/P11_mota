@@ -125,5 +125,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePhotos();
     attachNavigationEvents();
 
-    console.log('Navigation Overlay Script Chargé');
+    
 });
