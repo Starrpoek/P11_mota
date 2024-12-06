@@ -14,7 +14,7 @@
 
     <header id="header">
         <div class="container-header">
-            <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="Page d'accueil">
+            <a class="container-header__logo" href="<?php echo esc_url(home_url('/')); ?>" aria-label="Page d'accueil">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo/logo-nathalie-mota.jpg" alt="Logo de Nathalie Mota">
             </a>
             <nav id="navigation">
@@ -34,7 +34,7 @@
                 </ul>
             </div>
 
-            <nav>
+            <nav class="on-screen-menu">
                 <div class="ham-menu">
                     <span></span>
                     <span></span>
