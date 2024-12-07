@@ -9,6 +9,64 @@ Version: 1.0.0
 Text Domain: motatheme
 */
 
+@media (max-width: 1439px) {
+    .picture__custom-post {
+        width: auto !important;
+    }
+    .bloc-details__category-scf {
+        width: auto !important;
+    }
+    .bloc-details__category-scf h2 {
+        width: auto !important;
+    }
+}
+
+@media (max-width: 1147px) {
+    #filters {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    #filters {
+        flex-direction: column;
+        align-items: center;
+        margin: 4.94rem 2rem 2.5rem 2rem;
+    }
+    .filters-taxonomy {
+        flex-direction: column;
+    }
+    .page-more__content {
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 100%;
+    }
+    .page-more__title {
+        display: flex;
+        justify-content: center;
+    }
+    #header a {
+        margin-left: 1rem;
+    }
+    #navigation {
+        width: auto;
+        margin-right: 1rem;
+    }
+    .menu {
+        width: auto !important;
+    }
+    .bloc-details__picture {
+        align-self: center !important;
+    }
+    .home-hero__title {
+        font-size: 2rem;
+    }
+    .bloc-details {
+        flex-direction: column-reverse;
+    }
+}
+
 @media (max-width: 768px) {
     /* Page principale */
     #home {
@@ -155,9 +213,11 @@ Text Domain: motatheme
     .page-more__content {
         flex-direction: column;
         flex-wrap: wrap;
+        align-self: center !important;
     }
     .photo-bloc-container {
         width: 19.85rem !important;
+        max-width: 19.85rem !important;
         height: 17.42rem !important;
         overflow: visible !important;
     }
@@ -292,6 +352,9 @@ Text Domain: motatheme
     }
     .fullscreen-overlay {
         display: none;
+    }
+    .on-screen-menu {
+        display: block !important;
     }
 }
 
