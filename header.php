@@ -34,7 +34,7 @@
                 </ul>
             </div>
 
-            <nav class="on-screen-menu">
+            <div class="on-screen-menu">
                 <div class="ham-menu">
                     <span></span>
                     <span></span>

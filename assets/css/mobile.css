@@ -355,11 +355,15 @@ Text Domain: motatheme
     }
     .on-screen-menu {
         display: block !important;
+        margin-right: 2.5rem;
     }
 }
 
 @media (max-width: 425px) {
     .container-header img {
         margin-left: 1.5rem;
+    }
+    .on-screen-menu {
+        margin-right: 1.5rem;
     }
 }
