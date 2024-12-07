@@ -366,4 +366,7 @@ Text Domain: motatheme
     .on-screen-menu {
         margin-right: 1.5rem;
     }
+    .bloc-details__category-scf h2 {
+        font-size: 1.55rem;
+    }
 }
